@@ -101,14 +101,10 @@ setInterval(function() {
     }
 }, 10);
 
-// document.addEventListener('keydown', keyDown);
-// document.addEventListener('keyup', keyUp);
-
 // START BUTTON 
 const startButton = document.querySelector('.start');
 
 function startGame() {
-    // startButton.firstChild.nodeValue = 'changed';
     startButton.style.display = 'none';
     document.addEventListener('keydown', keyDown);
     document.addEventListener('keyup', keyUp);
