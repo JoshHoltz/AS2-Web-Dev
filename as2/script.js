@@ -79,22 +79,22 @@ let playerTop = 0;
 let playerLeft = 0;
 
 setInterval(function() {
-    if(downPressed) {
+    if(downPressed == true) {
         playerTop++;
         player.style.top = playerTop + 'px';
         playerMouth.classList = 'down';
     }
-    else if(upPressed) {
+    else if(upPressed == true) {
         playerTop--;
         player.style.top = playerTop + 'px';
         playerMouth.classList = 'up';
     }
-    else if(leftPressed) {
+    else if(leftPressed == true) {
         playerLeft--;
         player.style.left = playerLeft + 'px';
         playerMouth.classList = 'left';
     }
-    else if(rightPressed) {
+    else if(rightPressed == true) {
         playerLeft++;
         player.style.left = playerLeft + 'px';
         playerMouth.classList = 'right';
