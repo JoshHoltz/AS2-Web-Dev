@@ -153,6 +153,25 @@ function startGame() {
 
 startButton.addEventListener('click', startGame)
 
+// Change Player Colour
+const colours = document.querySelectorAll('.colours li');
+
+colours.forEach(colour => {
+    colour.addEventListener('click', setColour);
+    closeside.addEventListener('click', hideColours);
+});
+
+function setColour() {
+    player.style.backgroundColor = this.id;
+}
+
+function hideColours() {
+    let hide = querySelector('.closeside p')
+
+    aside.style.display = 'none';
+    aside.style.display = 'none';
+}
+
 // Points Detection
 let pointScoreTrack = 0;
 
@@ -169,33 +188,10 @@ function pointCheck() {
             position.bottom > pointPosition.top &&
             position.top < pointPosition.bottom
         ) {
-            // points[i].style.visibility = 'hidden';
-            points[i].style.display = 'none';
+            points[i].style.visibility = 'hidden';
+            // points[i].style.display = 'none';
             pointScoreTrack++;
             document.querySelector('.score p').textContent = pointScoreTrack;
         }
     }
-}
-
-// Change Playr Colour 
-// const colours = document.querySelectorAll('li');
-
-// let i = 0;
-// do {
-//     colours[i].addEventListener('click', setColour);
-//     i++;
-// } while (i < 10);
-
-// function setColour() {
-//     player.style.backgroundColor = this.id;
-// }
-
-const colours = document.querySelectorAll('.colours li');
-
-colours.forEach(colour => {
-    colour.addEventListener('click', setColour);
-});
-
-function setColour() {
-    document.body.style.backgroundColor = this.id;
 }
