@@ -80,12 +80,14 @@ let playerLeft = 0;
 
 setInterval(function() {
     if(downPressed == true) {
-        let position = player.getBoundingClientRect()
+        let position = player.getBoundingClientRect() /*Get the Current location and store it in position*/
         let newBottom = position.bottom + 1; 
 
-        let element = document.elementFromPoint(position.left, newBottom);
+        let btmL = document.elementFromPoint(position.left, newBottom); 
+        let btmR = document.elementFromPoint(position.left, newBottom);
 
-        if (element.classList.contains('wall') == false) {
+
+        if (btmL.classList.contains('wall') == false && btmR.classList.contains('wall') == false) {  /* If btmL or btmR classlist contains 'wall' it is false (cannot move down) move player ++*/
             playerTop++;
             player.style.top = playerTop + 'px';
         }
@@ -93,20 +95,45 @@ setInterval(function() {
         playerMouth.classList = 'down';
     }
 
-
     else if(upPressed == true) {
-        playerTop--;
-        player.style.top = playerTop + 'px';
+        let position = player.getBoundingClientRect();
+        let newTop = position.top - 1;
+
+        let topL = document.elementFromPoint(position.left, newTop);
+        let topR = document.elementFromPoint(position.right, newTop);
+
+        if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) {
+            playerTop--;
+            player.style.top = playerTop + 'px';
+        }
         playerMouth.classList = 'up';
     }
+
     else if(leftPressed == true) {
-        playerLeft--;
-        player.style.left = playerLeft + 'px';
+        let position = player.getBoundingClientRect();
+        let newLeft = position.left - 1;
+
+        let topLeft = document.elementFromPoint(newLeft, position.top);
+        let bottomLeft = document.elementFromPoint(newLeft, position.bottom);
+
+        if (topLeft.classList.contains('wall')== false && bottomLeft.classList.contains('wall') == false) {
+            playerLeft--;
+            player.style.left = playerLeft + 'px';
+        }
         playerMouth.classList = 'left';
     }
+
     else if(rightPressed == true) {
-        playerLeft++;
-        player.style.left = playerLeft + 'px';
+        let position = player.getBoundingClientRect();
+        let newRight = position.right + 1;
+
+        let topRight = document.elementFromPoint(newRight, position.top);
+        let bottomRight = document.elementFromPoint(newRight, position.bottom);
+
+        if (topRight.classList.contains('wall') == false && bottomRight.classList.contains('wall') == false) {
+            playerLeft++;
+            player.style.left = playerLeft + 'px';
+        }
         playerMouth.classList = 'right';
     }
 }, 10);
