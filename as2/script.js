@@ -6,7 +6,7 @@ let rightPressed = false;
 const main = document.querySelector('main');
 
 //Player = 2, Wall = 1, Enemy = 3, Point = 0
-let maze = [
+const maze = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 2, 0, 1, 0, 0, 0, 0, 3, 1],
     [1, 0, 0, 0, 0, 0, 0, 1, 1, 1],
@@ -154,7 +154,7 @@ function startGame() {
 startButton.addEventListener('click', startGame)
 
 // Points Detection
-let pointScore = 0; 
+let pointScoreTrack = 0;
 
 function pointCheck() {
     const position = player.getBoundingClientRect();
@@ -169,9 +169,33 @@ function pointCheck() {
             position.bottom > pointPosition.top &&
             position.top < pointPosition.bottom
         ) {
+            // points[i].style.visibility = 'hidden';
             points[i].style.display = 'none';
-            pointScore += 1;
-            console.log(pointScore)
+            pointScoreTrack++;
+            document.querySelector('.score p').textContent = pointScoreTrack;
         }
     }
+}
+
+// Change Playr Colour 
+// const colours = document.querySelectorAll('li');
+
+// let i = 0;
+// do {
+//     colours[i].addEventListener('click', setColour);
+//     i++;
+// } while (i < 10);
+
+// function setColour() {
+//     player.style.backgroundColor = this.id;
+// }
+
+const colours = document.querySelectorAll('.colours li');
+
+colours.forEach(colour => {
+    colour.addEventListener('click', setColour);
+});
+
+function setColour() {
+    document.body.style.backgroundColor = this.id;
 }

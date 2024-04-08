@@ -230,3 +230,39 @@ button:nth-child(4) { grid-area: downArrow; }
 .hit {
     animation: hitAnimation 1.5s ease-in-out;
 }
+
+#closeside {
+    float: right;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+aside ul {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+    margin-bottom: 20px;
+    overflow: auto;
+}
+
+aside li {
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 100%;
+    float: left; 
+    cursor: pointer; 
+    border: 2px solid #ddd; 
+    margin: 0.3em;
+    margin-right: 4px;
+}
+
+aside li:nth-child(1) {background-color: #ff0000;}
+aside li:nth-child(2) {background-color: #0000ff;}
+aside li:nth-child(3) {background-color: #ffff00;}
+aside li:nth-child(4) {background-color: #008000;}
+aside li:nth-child(5) {background-color:#8b008b}
+aside li:nth-child(6) {background-color: #ffa500;}
+aside li:nth-child(7) {background-color: #000000;}
+aside li:nth-child(8) {background-color: #a52a2a;}
+aside li:nth-child(9) {background-color: #ffc0cb;}
+aside li:nth-child(10) {background-color: #ffffff;}
