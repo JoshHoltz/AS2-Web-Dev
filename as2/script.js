@@ -137,6 +137,7 @@ setInterval(function() {
         }
         playerMouth.classList = 'right';
     }
+    pointCheck()
 }, 10);
 
 // START BUTTON 
@@ -151,3 +152,26 @@ function startGame() {
 }
 
 startButton.addEventListener('click', startGame)
+
+// Points Detection
+let pointScore = 0; 
+
+function pointCheck() {
+    const position = player.getBoundingClientRect();
+    const points = document.querySelectorAll('.point');
+
+    for (let i = 0; i < points.length; i++) {
+        let pointPosition = points[i].getBoundingClientRect();
+
+        if (
+            position.right > pointPosition.left &&
+            position.left < pointPosition.right &&
+            position.bottom > pointPosition.top &&
+            position.top < pointPosition.bottom
+        ) {
+            points[i].style.display = 'none';
+            pointScore += 1;
+            console.log(pointScore)
+        }
+    }
+}
