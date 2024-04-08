@@ -78,6 +78,7 @@ const playerMouth = player.querySelector('.mouth');
 let playerTop = 0;
 let playerLeft = 0;
 
+// Collision Detection
 setInterval(function() {
     if(downPressed == true) {
         let position = player.getBoundingClientRect() /*Get the Current location and store it in position*/
