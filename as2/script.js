@@ -80,10 +80,20 @@ let playerLeft = 0;
 
 setInterval(function() {
     if(downPressed == true) {
-        playerTop++;
-        player.style.top = playerTop + 'px';
+        let position = player.getBoundingClientRect()
+        let newBottom = position.bottom + 1; 
+
+        let element = document.elementFromPoint(position.left, newBottom);
+
+        if (element.classList.contains('wall') == false) {
+            playerTop++;
+            player.style.top = playerTop + 'px';
+        }
+
         playerMouth.classList = 'down';
     }
+
+
     else if(upPressed == true) {
         playerTop--;
         player.style.top = playerTop + 'px';
