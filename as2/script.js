@@ -183,10 +183,13 @@ function closeColourPicker() {
     }
 }
 
-// Game Over
+// GAME OVER
 function gameOver() {
     alert('game over');
     prompt('What is your Name? ')
+
+    document.removeEventListener('keydown', keyDown);
+    document.removeEventListener('keyup', keyUp);
 }
 
 // ENEMY DETECTION
@@ -215,7 +218,7 @@ function enemyCheck() {
             setTimeout(() => {
                 player.classList.remove('hit'); 
                 playerInvisiblity = false;
-            }, 1500); 
+            }, 3000); 
 
             lives--; 
             console.log(lives);
