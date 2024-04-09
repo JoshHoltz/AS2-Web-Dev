@@ -92,7 +92,6 @@ setInterval(function() {
             playerTop++;
             player.style.top = playerTop + 'px';
         }
-
         playerMouth.classList = 'down';
     }
 
@@ -137,7 +136,10 @@ setInterval(function() {
         }
         playerMouth.classList = 'right';
     }
-    pointCheck()
+
+    enemyCheck();
+
+    pointCheck();
 }, 10);
 
 // START BUTTON 
@@ -179,13 +181,33 @@ function closeColourPicker() {
     }
 }
 
+// ENEMY DETECTION
+function enemyCheck() {
+    const position = player.getBoundingClientRect(); //GET PLAYER POSITION 
+    const enemies = document.querySelectorAll('.enemy');
+
+    for (const enemy of enemies) {
+        const enemyPosition = enemy.getBoundingClientRect();
+
+        if (
+            position.right > enemyPosition.left &&
+            position.left < enemyPosition.right &&
+            position.bottom > enemyPosition.top &&
+            position.top < enemyPosition.bottom 
+        ) {
+            player.classList.add('hit');
+            console.log('test');
+        }
+    }
+}
+
 // Points Detection
 let pointScoreTrack = 0;
 const maxPoints = document.querySelectorAll('.point').length;
 const collectedPoints = new Set();
 
 function pointCheck() {
-    const position = player.getBoundingClientRect();
+    const position = player.getBoundingClientRect(); //GET PLAYER POSITION 
     const points = document.querySelectorAll('.point');
 
     for (let i = 0; i < points.length; i++) {
@@ -210,11 +232,12 @@ function pointCheck() {
             }
 
             if (pointScoreTrack % 5 === 0) { //COME BACK TO
-                player.classList.add('pacPoints')
+                player.classList.add('hit')
             }
         }
     }
 }
+
 
 // Game Over
 function gameOver() {
