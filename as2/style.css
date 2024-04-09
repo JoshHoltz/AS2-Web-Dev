@@ -266,3 +266,7 @@ aside li:nth-child(7) {background-color: #000000;}
 aside li:nth-child(8) {background-color: #a52a2a;}
 aside li:nth-child(9) {background-color: #ffc0cb;}
 aside li:nth-child(10) {background-color: #ffffff;}
+
+.collected {
+    visibility: hidden;
+}

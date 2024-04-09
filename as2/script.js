@@ -157,6 +157,7 @@ startButton.addEventListener('click', startGame)
 const colours = document.querySelectorAll('.colours li');
 const closeside = document.getElementById('closeside');
 const colourPicker = document.getElementById('colourPicker')
+const livesCount = document.getElementById('#lives li')
 
 closeside.addEventListener('click', closeColourPicker)
 
@@ -165,7 +166,7 @@ colours.forEach(colour => {
 });
 
 function setColour() {
-    player.style.backgroundColor = this.id;
+    player.style.backgroundColor = this.id;    
 }
 
 function closeColourPicker() {
@@ -180,6 +181,8 @@ function closeColourPicker() {
 
 // Points Detection
 let pointScoreTrack = 0;
+const maxPoints = document.querySelectorAll('.point').length;
+const collectedPoints = new Set();
 
 function pointCheck() {
     const position = player.getBoundingClientRect();
@@ -192,12 +195,26 @@ function pointCheck() {
             position.right > pointPosition.left &&
             position.left < pointPosition.right &&
             position.bottom > pointPosition.top &&
-            position.top < pointPosition.bottom
+            position.top < pointPosition.bottom &&
+            !collectedPoints.has(points[i]) //only apply if hasnt been collected
         ) {
-            points[i].style.visibility = 'hidden';
-            // points[i].style.display = 'none';
-            pointScoreTrack++;
+            pointScoreTrack++; //if not been collected +1 to score and update 
             document.querySelector('.score p').textContent = pointScoreTrack;
+
+            collectedPoints.add(points[i]);
+            if (collectedPoints.has(points[i])) { //add the new collected points
+                points[i].classList.add('collected'); //to the css class collected (visibility hidden)
+
+            if (pointScoreTrack === maxPoints) { //if the points were to == to the .length of the total points
+                gameOver(); //run the game over function
+            }
         }
     }
+}
+
+// Game Over
+function gameOver() {
+    alert('game over');
+    prompt('What is your Name? ')
+}
 }
