@@ -208,6 +208,10 @@ function pointCheck() {
             if (pointScoreTrack === maxPoints) { //if the points were to == to the .length of the total points
                 gameOver(); //run the game over function
             }
+
+            if (pointScoreTrack % 5 === 0) { //COME BACK TO
+                player.classList.add('pacPoints')
+            }
         }
     }
 }

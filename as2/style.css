@@ -270,3 +270,22 @@ aside li:nth-child(10) {background-color: #ffffff;}
 .collected {
     visibility: hidden;
 }
+
+@keyframes pacPoints {
+    0% {
+        background-color: yellow; 
+        transform: scale(0.75);
+    }
+    50% {
+        background-color: rgb(200, 25, 28); 
+        transform: scale(0.5);
+    }
+    100% {
+        transform: scale(1);
+        background-color: yellow; 
+    }
+}
+
+.pacPoints {
+    animation: pacPoints 3s ease-in-out;
+}
