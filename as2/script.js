@@ -183,7 +183,8 @@ function closeColourPicker() {
 
 // ENEMY DETECTION
 function enemyCheck() {
-    const position = player.getBoundingClientRect(); //GET PLAYER POSITION 
+    // const player = document.getElementById('.player');
+    let position = player.getBoundingClientRect(); //GET PLAYER POSITION 
     const enemies = document.querySelectorAll('.enemy');
 
     for (const enemy of enemies) {
@@ -197,6 +198,7 @@ function enemyCheck() {
         ) {
             player.classList.add('hit');
             console.log('test');
+            player.style.backgroundColor = 'red';
         }
     }
 }
