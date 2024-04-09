@@ -2,6 +2,8 @@ let upPressed = false;
 let downPressed = false;
 let leftPressed = false;
 let rightPressed = false;
+let lives = 3
+
 
 const main = document.querySelector('main');
 
@@ -197,12 +199,17 @@ function enemyCheck() {
             position.top < enemyPosition.bottom 
         ) {
             player.classList.add('hit'); 
+
+            lives -= 1;
+            console.log(lives)
+
             setTimeout(() => {
                 player.classList.remove('hit'); 
             }, 1500); 
         }
     }
 }
+
 
 // Points Detection
 let pointScoreTrack = 0;
@@ -235,7 +242,7 @@ function pointCheck() {
             }
 
             if (pointScoreTrack % 5 === 0) { //COME BACK TO
-                player.classList.add('hit')
+                // player.classList.add('hit')
             }
         }
     }
