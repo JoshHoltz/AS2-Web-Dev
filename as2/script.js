@@ -155,21 +155,24 @@ startButton.addEventListener('click', startGame)
 
 // Change Player Colour
 const colours = document.querySelectorAll('.colours li');
+const closeside = document.getElementById('closeside');
+const colourPicker = document.getElementById('colourPicker')
+
+closeside.addEventListener('click', hideColours)
 
 colours.forEach(colour => {
     colour.addEventListener('click', setColour);
-    closeside.addEventListener('click', hideColours);
 });
 
 function setColour() {
     player.style.backgroundColor = this.id;
 }
 
-function hideColours() {
-    let hide = querySelector('.closeside p')
+// colourPicker.style.display = 'none';
 
-    aside.style.display = 'none';
-    aside.style.display = 'none';
+function hideColours() {
+    closeside.style.content = '-';
+    colourPicker.style.display = 'none';
 }
 
 // Points Detection
