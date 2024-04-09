@@ -158,7 +158,7 @@ const colours = document.querySelectorAll('.colours li');
 const closeside = document.getElementById('closeside');
 const colourPicker = document.getElementById('colourPicker')
 
-closeside.addEventListener('click', hideColours)
+closeside.addEventListener('click', closeColourPicker)
 
 colours.forEach(colour => {
     colour.addEventListener('click', setColour);
@@ -168,11 +168,14 @@ function setColour() {
     player.style.backgroundColor = this.id;
 }
 
-// colourPicker.style.display = 'none';
-
-function hideColours() {
-    closeside.style.content = '-';
-    colourPicker.style.display = 'none';
+function closeColourPicker() {
+    if (colourPicker.style.display === 'none') {
+        colourPicker.style.display = 'block';
+        closeside.textContent = '-';
+    } else {
+        colourPicker.style.display = 'none';
+        closeside.textContent = '+'
+    }
 }
 
 // Points Detection
