@@ -196,9 +196,10 @@ function enemyCheck() {
             position.bottom > enemyPosition.top &&
             position.top < enemyPosition.bottom 
         ) {
-            player.classList.add('hit');
-            console.log('test');
-            player.style.backgroundColor = 'red';
+            player.classList.add('hit'); 
+            setTimeout(() => {
+                player.classList.remove('hit'); 
+            }, 1500); 
         }
     }
 }
