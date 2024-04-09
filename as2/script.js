@@ -184,10 +184,13 @@ function closeColourPicker() {
 }
 
 // ENEMY DETECTION
+let playerInvisiblity = false;
+
 function enemyCheck() {
-    // const player = document.getElementById('.player');
     let position = player.getBoundingClientRect(); //GET PLAYER POSITION 
     const enemies = document.querySelectorAll('.enemy');
+
+    if (playerInvisiblity) return;
 
     for (const enemy of enemies) {
         const enemyPosition = enemy.getBoundingClientRect();
@@ -198,14 +201,22 @@ function enemyCheck() {
             position.bottom > enemyPosition.top &&
             position.top < enemyPosition.bottom 
         ) {
-            player.classList.add('hit'); 
+            if (playerInvisiblity == false) {
+                player.classList.add('hit'); 
+                playerInvisiblity = true;
+            }
+
+            setTimeout(() => {
+                player.classList.remove('hit'); 
+                playerInvisiblity = false;
+            }, 1500); 
 
             lives -= 1;
             console.log(lives)
 
-            setTimeout(() => {
-                player.classList.remove('hit'); 
-            }, 1500); 
+            if (lives === 0) {
+                gameOver();
+            }
         }
     }
 }
