@@ -183,6 +183,12 @@ function closeColourPicker() {
     }
 }
 
+// Game Over
+function gameOver() {
+    alert('game over');
+    prompt('What is your Name? ')
+}
+
 // ENEMY DETECTION
 let playerInvisiblity = false;
 
@@ -211,16 +217,15 @@ function enemyCheck() {
                 playerInvisiblity = false;
             }, 1500); 
 
-            lives -= 1;
-            console.log(lives)
+            lives--; 
+            console.log(lives);
 
-            if (lives === 0) {
+            if (lives <= 0) { 
                 gameOver();
             }
         }
     }
 }
-
 
 // Points Detection
 let pointScoreTrack = 0;
@@ -257,12 +262,5 @@ function pointCheck() {
             }
         }
     }
-}
-
-
-// Game Over
-function gameOver() {
-    alert('game over');
-    prompt('What is your Name? ')
 }
 }
