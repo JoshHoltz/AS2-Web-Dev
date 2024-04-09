@@ -190,6 +190,8 @@ function gameOver() {
 
     document.removeEventListener('keydown', keyDown);
     document.removeEventListener('keyup', keyUp);
+
+    player.classList.add('dead');
 }
 
 // ENEMY DETECTION
