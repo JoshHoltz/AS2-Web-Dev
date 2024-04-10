@@ -80,6 +80,15 @@ const playerMouth = player.querySelector('.mouth');
 let playerTop = 0;
 let playerLeft = 0;
 
+// ENEMY MOVE
+function moveEnemiesRandomly() {
+    const enemies = document.querySelectorAll('.enemy');
+
+    enemies.forEach(enemy => {
+
+    }) 
+}
+
 // Collision Detection
 setInterval(function() {
     if(downPressed == true) {
@@ -142,6 +151,8 @@ setInterval(function() {
     enemyCheck();
 
     pointCheck();
+
+    moveEnemiesRandomly();
 }, 10);
 
 // START BUTTON 
@@ -155,6 +166,8 @@ function startGame() {
     console.log('Game Started')
 }
 
+startButton.addEventListener('click', startGame)
+
 // RESTART GAME
 const restartButton = document.querySelector('.restart');
 restartButton.style.display = 'none';
@@ -165,14 +178,9 @@ function restartGame() {
     restartButton.style.display = 'flex';
     document.removeEventListener('keydown', keyDown);
     document.removeEventListener('keyup', keyUp);
+    player.classList.add('dead');
 
-    if (restartBtn) {
         reloadBrowser();
-    }
-}
-
-function reloadBrowser() {
-    location.reload();
 }
 
 // GAME OVER
@@ -186,7 +194,18 @@ function gameOver() {
     player.classList.add('dead');
 }
 
-startButton.addEventListener('click', startGame)
+function reloadBrowser() {
+    location.reload();
+}
+
+// UPDATE LIVES
+function updateLives() {
+    let totalLives = document.querySelectorAll('.lives li');
+
+    for (let i = 0; i < totalLives.length; i++) {
+        totalLives[i].classList.remove('lives');
+    }
+}
 
 // Change Player Colour
 const colours = document.querySelectorAll('.colours li');
@@ -247,6 +266,8 @@ function enemyCheck() {
 
             if (lives <= 0) { 
                 restartGame();
+            } else {
+                updateLives();
             }
         }
     }
