@@ -155,6 +155,37 @@ function startGame() {
     console.log('Game Started')
 }
 
+// RESTART GAME
+const restartButton = document.querySelector('.restart');
+restartButton.style.display = 'none';
+let restartBtn = restartButton.addEventListener('click', reloadBrowser)
+
+
+function restartGame() {
+    restartButton.style.display = 'flex';
+    document.removeEventListener('keydown', keyDown);
+    document.removeEventListener('keyup', keyUp);
+
+    if (restartBtn) {
+        reloadBrowser();
+    }
+}
+
+function reloadBrowser() {
+    location.reload();
+}
+
+// GAME OVER
+function gameOver() {
+    alert('You Won! Game Over');
+    prompt('What is your Name? ')
+
+    document.removeEventListener('keydown', keyDown);
+    document.removeEventListener('keyup', keyUp);
+
+    player.classList.add('dead');
+}
+
 startButton.addEventListener('click', startGame)
 
 // Change Player Colour
@@ -181,17 +212,6 @@ function closeColourPicker() {
         colourPicker.style.display = 'none';
         closeside.textContent = '+'
     }
-}
-
-// GAME OVER
-function gameOver() {
-    alert('game over');
-    prompt('What is your Name? ')
-
-    document.removeEventListener('keydown', keyDown);
-    document.removeEventListener('keyup', keyUp);
-
-    player.classList.add('dead');
 }
 
 // ENEMY DETECTION
@@ -226,7 +246,7 @@ function enemyCheck() {
             console.log(lives);
 
             if (lives <= 0) { 
-                gameOver();
+                restartGame();
             }
         }
     }
