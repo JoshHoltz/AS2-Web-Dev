@@ -2,7 +2,7 @@ let upPressed = false;
 let downPressed = false;
 let leftPressed = false;
 let rightPressed = false;
-let lives = 3
+let lives = 3;
 
 
 const main = document.querySelector('main');
@@ -81,12 +81,24 @@ let playerTop = 0;
 let playerLeft = 0;
 
 // ENEMY MOVE
-function moveEnemiesRandomly() {
+
+//if enemies were to be spawn outside the maze boundaires, rerun the function until they have spawned within
+function moveEnemies() {
     const enemies = document.querySelectorAll('.enemy');
 
     enemies.forEach(enemy => {
+        const enemyPosition = getBoundingClientRect(); //get the position for all enemies
 
-    }) 
+        if (
+            enemyPosition.right > maze.left &&
+            enemyPosition.left < maze.right &&
+            enemyPosition.bottom > maze.top &&
+            enemyPosition.top < maze.bottom 
+        ) {
+            moveEnemies(); //rerun if they are not inside the maze
+
+        //random movement script 
+}})
 }
 
 // Collision Detection
@@ -152,7 +164,6 @@ setInterval(function() {
 
     pointCheck();
 
-    moveEnemiesRandomly();
 }, 10);
 
 // START BUTTON 
@@ -180,6 +191,7 @@ function restartGame() {
     document.removeEventListener('keyup', keyUp);
     player.classList.add('dead');
 
+    restartBtn.addEventListener('click', restartButton)
         reloadBrowser();
 }
 
