@@ -167,6 +167,7 @@ nextButton.style.display = 'none';
 let nextBtn = nextButton.addEventListener('click', reloadBrowser)
 
 function nextLevel() {
+
     nextButton.style.display = 'flex';
 
     document.removeEventListener('keydown', keyDown);
@@ -187,23 +188,41 @@ function restartGame() {
     document.removeEventListener('keyup', keyUp);
     player.classList.add('dead');
 
+    topFiveLocalStorage();
+
     restartBtn.addEventListener('click', restartButton)
         reloadBrowser();
 }
 
 // GAME OVER
 function gameOver() {
-    // alert('You Won! Game Over');
-    prompt('What is your Name? ');
+    alert('You Won! Game Over');
 
     document.removeEventListener('keydown', keyDown);
     document.removeEventListener('keyup', keyUp);
 
     player.classList.add('dead');
 
+    topFiveLocalStorage();
+
     if (maxPoints === pointScoreTrack) { //if they won the level and the max points is === to the gathered points run next level as they won
         nextLevel();
     }
+}
+
+// LOCAL STORAGE 
+function topFiveLocalStorage() {
+    let playerName = prompt('What is your Name? ');
+
+    let scoreTrack = {
+        playerName: playerName,
+        score: pointScoreTrack
+    };
+
+    let scoreTrackJSON = JSON.stringify(scoreTrack);
+    localStorage.setItem('gameScore', scoreTrackJSON);
+
+    console.log(scoreTrackJSON);
 }
 
 function reloadBrowser() {

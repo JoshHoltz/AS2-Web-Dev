@@ -271,7 +271,7 @@ aside li:nth-child(10) {background-color: #ffffff;}
     visibility: hidden;
 }
 
-@keyframes pacPoints {
+/* @keyframes pacPoints {
     0% {
         background-color: yellow; 
         transform: scale(0.75);
@@ -288,7 +288,7 @@ aside li:nth-child(10) {background-color: #ffffff;}
 
 .pacPoints {
     animation: pacPoints 3s ease-in-out;
-}
+} */
 
 .restartDiv {
     position: absolute;
