@@ -2,7 +2,7 @@ let upPressed = false;
 let downPressed = false;
 let leftPressed = false;
 let rightPressed = false;
-let lives = 3;
+let lives = 2;
 
 
 const main = document.querySelector('main');
@@ -79,27 +79,6 @@ const player = document.querySelector('#player');
 const playerMouth = player.querySelector('.mouth');
 let playerTop = 0;
 let playerLeft = 0;
-
-// ENEMY MOVE
-
-//if enemies were to be spawn outside the maze boundaires, rerun the function until they have spawned within
-function moveEnemies() {
-    const enemies = document.querySelectorAll('.enemy');
-
-    enemies.forEach(enemy => {
-        const enemyPosition = getBoundingClientRect(); //get the position for all enemies
-
-        if (
-            enemyPosition.right > maze.left &&
-            enemyPosition.left < maze.right &&
-            enemyPosition.bottom > maze.top &&
-            enemyPosition.top < maze.bottom 
-        ) {
-            moveEnemies(); //rerun if they are not inside the maze
-
-        //random movement script 
-}})
-}
 
 // Collision Detection
 setInterval(function() {
@@ -184,7 +163,6 @@ const restartButton = document.querySelector('.restart');
 restartButton.style.display = 'none';
 let restartBtn = restartButton.addEventListener('click', reloadBrowser)
 
-
 function restartGame() {
     restartButton.style.display = 'flex';
     document.removeEventListener('keydown', keyDown);
@@ -214,8 +192,12 @@ function reloadBrowser() {
 function updateLives() {
     let totalLives = document.querySelectorAll('.lives li');
 
-    for (let i = 0; i < totalLives.length; i++) {
-        totalLives[i].classList.remove('lives');
+    if (lives >= 0) {
+        lives--;
+        totalLives[totalLives.length - 1].remove();
+        console.log(lives);
+    } else {
+        console.log('Test');
     }
 }
 
@@ -246,13 +228,13 @@ function closeColourPicker() {
 }
 
 // ENEMY DETECTION
-let playerInvisiblity = false;
+let playerInvincibility = false;
 
 function enemyCheck() {
     let position = player.getBoundingClientRect(); //GET PLAYER POSITION 
     const enemies = document.querySelectorAll('.enemy');
 
-    if (playerInvisiblity) return;
+    if (playerInvincibility) return;
 
     for (const enemy of enemies) {
         const enemyPosition = enemy.getBoundingClientRect();
@@ -263,18 +245,15 @@ function enemyCheck() {
             position.bottom > enemyPosition.top &&
             position.top < enemyPosition.bottom 
         ) {
-            if (playerInvisiblity == false) {
+            if (playerInvincibility == false) {
                 player.classList.add('hit'); 
-                playerInvisiblity = true;
+                playerInvincibility = true;
             }
 
             setTimeout(() => {
                 player.classList.remove('hit'); 
-                playerInvisiblity = false;
+                playerInvincibility = false;
             }, 3000); 
-
-            lives--; 
-            console.log(lives);
 
             if (lives <= 0) { 
                 restartGame();
