@@ -139,7 +139,7 @@ setInterval(function() {
         playerMouth.classList = 'right';
     }
 
-    enemyCheck();
+    enemyCheck(); 
 
     pointCheck();
 
@@ -219,24 +219,26 @@ function topFiveLocalStorage() {
         score: pointScoreTrack
     };
 
-    let scoreTrackJSON = JSON.stringify(scoreTrack);
+    let scoreTrackJSON = JSON.stringify(scoreTrack); //Convert the int (pointScoreTrack) into str as localStorage can only store str's
     localStorage.setItem('gameScore', scoreTrackJSON);
 
     console.log(scoreTrackJSON);
 }
 
+
+// RELOAD BROWSER
 function reloadBrowser() {
     location.reload();
 }
 
 // UPDATE LIVES
 function updateLives() {
-    let totalLives = document.querySelectorAll('.lives li');
+    let totalLives = document.querySelectorAll('.lives li'); //select the css class for the lives 
 
-    if (lives >= 0) {
-        lives--;
-        totalLives[totalLives.length - 1].remove();
-        console.log(lives);
+    if (lives >= 0) { //if they lives are not = to or less than 0 run 
+        lives--; //remove lives by 1
+        totalLives[totalLives.length - 1].remove(); //select the totalLives variable (or .lives li css class) and .remove() once a life has been taken off
+        console.log(lives); 
     } else {
         console.log('Test');
     }
@@ -259,26 +261,26 @@ function setColour() {
 }
 
 function closeColourPicker() {
-    if (colourPicker.style.display === 'none') {
-        colourPicker.style.display = 'block';
-        closeside.textContent = '-';
+    if (colourPicker.style.display === 'none') { //if pressed
+        colourPicker.style.display = 'block'; 
+        closeside.textContent = '-'; //if you are displaying change '+' to be '-' to imitate minimise button
     } else {
         colourPicker.style.display = 'none';
-        closeside.textContent = '+'
+        closeside.textContent = '+' //if not displaying colour wheel display '+' to show open button for colours
     }
 }
 
 // ENEMY DETECTION
-let playerInvincibility = false;
+let playerInvincibility = false; 
 
 function enemyCheck() {
     let position = player.getBoundingClientRect(); //GET PLAYER POSITION 
     const enemies = document.querySelectorAll('.enemy');
 
-    if (playerInvincibility) return;
+    if (playerInvincibility) return; //if already invincible break out of the loop to stop allowing potential always invincible bug to run
 
     for (const enemy of enemies) {
-        const enemyPosition = enemy.getBoundingClientRect();
+        const enemyPosition = enemy.getBoundingClientRect(); 
 
         if (
             position.right > enemyPosition.left &&
@@ -286,43 +288,43 @@ function enemyCheck() {
             position.bottom > enemyPosition.top &&
             position.top < enemyPosition.bottom 
         ) {
-            if (playerInvincibility == false) {
-                player.classList.add('hit'); 
-                playerInvincibility = true;
+            if (playerInvincibility == false) { //if not invincible add the 'hit' css class
+                player.classList.add('hit');  
+                playerInvincibility = true; //player invinciblity = true now 
             }
 
             setTimeout(() => {
-                player.classList.remove('hit'); 
-                playerInvincibility = false;
-            }, 3000); 
-
-            if (lives <= 0) { 
+                player.classList.remove('hit');  
+                playerInvincibility = false; //invincibility = false to break 
+            }, 3000); //3s iof invincibility 
+ 
+            if (lives <= 0) {  //if lives are less than or = to 0 run restartGame(); as they lost
                 restartGame();
             } else {
-                updateLives();
+                updateLives(); //otherwise updateLives();
             }
         }
     }
 }
 
 // Points Detection
-let pointScoreTrack = 0;
-const maxPoints = document.querySelectorAll('.point').length;
-const collectedPoints = new Set();
+let pointScoreTrack = 0; //let start of game score = 0 always;
+const maxPoints = document.querySelectorAll('.point').length; //get the maximum points achiveable in the maze by selecting All '.point'.length and store it in maxPoints
+const collectedPoints = new Set(); 
 
 function pointCheck() {
     const position = player.getBoundingClientRect(); //GET PLAYER POSITION 
-    const points = document.querySelectorAll('.point');
+    const points = document.querySelectorAll('.point'); 
 
     for (let i = 0; i < points.length; i++) {
-        let pointPosition = points[i].getBoundingClientRect();
+        let pointPosition = points[i].getBoundingClientRect(); 
 
         if (
             position.right > pointPosition.left &&
             position.left < pointPosition.right &&
             position.bottom > pointPosition.top &&
             position.top < pointPosition.bottom &&
-            !collectedPoints.has(points[i]) //only apply if hasnt been collected
+            !collectedPoints.has(points[i]) //if point hasnt been collected you can run, otherwise do not 
         ) {
             pointScoreTrack++; //if not been collected +1 to score and update 
             document.querySelector('.score p').textContent = pointScoreTrack;
