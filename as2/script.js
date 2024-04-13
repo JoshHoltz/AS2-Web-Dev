@@ -145,11 +145,14 @@ setInterval(function() {
 
 }, 10);
 
+// START, NEXT, AND, RESTART BUTTONS //
+
 // START BUTTON 
 const startButton = document.querySelector('.start');
 
 function startGame() {
     startButton.style.display = 'none';
+
     document.addEventListener('keydown', keyDown);
     document.addEventListener('keyup', keyUp);
 
@@ -157,6 +160,21 @@ function startGame() {
 }
 
 startButton.addEventListener('click', startGame)
+
+// NEXT LEVEL
+const nextButton = document.querySelector('.next');
+nextButton.style.display = 'none';
+let nextBtn = nextButton.addEventListener('click', reloadBrowser)
+
+function nextLevel() {
+    nextButton.style.display = 'flex';
+
+    document.removeEventListener('keydown', keyDown);
+    document.removeEventListener('keyup', keyUp);
+
+    nextBtn.addEventListener('click', restartButton)
+        reloadBrowser();
+}
 
 // RESTART GAME
 const restartButton = document.querySelector('.restart');
@@ -175,13 +193,17 @@ function restartGame() {
 
 // GAME OVER
 function gameOver() {
-    alert('You Won! Game Over');
-    prompt('What is your Name? ')
+    // alert('You Won! Game Over');
+    prompt('What is your Name? ');
 
     document.removeEventListener('keydown', keyDown);
     document.removeEventListener('keyup', keyUp);
 
     player.classList.add('dead');
+
+    if (maxPoints === pointScoreTrack) { //if they won the level and the max points is === to the gathered points run next level as they won
+        nextLevel();
+    }
 }
 
 function reloadBrowser() {
@@ -292,6 +314,7 @@ function pointCheck() {
 
             if (pointScoreTrack === maxPoints) { //if the points were to == to the .length of the total points
                 gameOver(); //run the game over function
+                // nextLevel();
             }
 
             if (pointScoreTrack % 5 === 0) { //COME BACK TO

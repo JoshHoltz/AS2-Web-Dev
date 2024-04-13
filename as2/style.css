@@ -315,3 +315,11 @@ aside li:nth-child(10) {background-color: #ffffff;}
     text-decoration: none;
     margin-left: 10px;
 }
+
+.next div{
+    position: absolute;
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
