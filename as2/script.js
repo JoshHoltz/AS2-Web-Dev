@@ -225,7 +225,6 @@ function topFiveLocalStorage() {
     console.log(scoreTrackJSON);
 }
 
-
 // RELOAD BROWSER
 function reloadBrowser() {
     location.reload();
