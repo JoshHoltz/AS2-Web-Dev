@@ -75,6 +75,39 @@ function keyDown(event) {
     }
 }
 
+//Enemy Movement 
+
+const enemies = document.querySelector('.enemy');
+
+setInterval(function moveEnemy(event) {
+
+    for (let i = 0; i > enemies.length; i++) {
+        let position = enemies[i].getBoundingClientRect() /*get enemy location */
+    }
+
+    console.log(enemies.length);
+
+    function randomNumber() {
+        return Math.floor(Math.random() * 4) +1;
+    };
+    
+    console.log(randomNumber());
+
+    if (randomNumber === 1) {
+        enemies.top -= 1;
+        upPressed = true;
+    } else if (randomNumber === 2) {
+        enemies.bottom += 1;
+        downPressed = true;
+    } else if (randomNumber === 3) {
+        enemies.left -= 1;
+        leftPressed = true;
+    } else if (randomNumber === 4) {
+        enemies.right += 1;
+        rightPressed = true;
+    }
+}, 1000);
+
 const player = document.querySelector('#player');
 const playerMouth = player.querySelector('.mouth');
 let playerTop = 0;
