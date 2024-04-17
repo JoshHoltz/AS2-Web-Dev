@@ -232,6 +232,11 @@ function restartGame() {
 function gameOver() {
     alert('You Won! Game Over');
 
+    let upPressed = false;
+    let downPressed = false;
+    let leftPressed = false;
+    let rightPressed = false;
+
     document.removeEventListener('keydown', keyDown);
     document.removeEventListener('keyup', keyUp);
 
@@ -343,7 +348,7 @@ function enemyCheck() {
 // Points Detection
 let pointScoreTrack = 0; //let start of game score = 0 always;
 const maxPoints = document.querySelectorAll('.point').length; //get the maximum points achiveable in the maze by selecting All '.point'.length and store it in maxPoints
-const collectedPoints = new Set();
+// const collectedPoints = new Set();
 
 // function pointCheck() {
 //     const position = player.getBoundingClientRect(); //GET PLAYER POSITION 
@@ -378,26 +383,26 @@ const collectedPoints = new Set();
 //     }
 // }
 
-function pointCheck() { 
-    const position = player.getBoundingClientRect(); 
-    const points = document.querySelectorAll('.point'); 
-    
-    for (let i = 0; i < points.length; i++) { 
-        let pos = points[i].getBoundingClientRect(); 
-        if (position.right > pos.left && 
-            position.left < pos.right && 
-            position.bottom > pos.top && 
+function pointCheck() {
+    const position = player.getBoundingClientRect(); //get player position
+    const points = document.querySelectorAll('.point'); //select all with class with points
+
+    for (let i = 0; i < points.length; i++) {
+        let pos = points[i].getBoundingClientRect();
+        if (position.right > pos.left &&
+            position.left < pos.right &&
+            position.bottom > pos.top &&
             position.top < pos.bottom
-            ) { 
-                points[i].classList.remove('point');
-                pointScoreTrack++;
-                document.querySelector('.score p').textContent = pointScoreTrack;
+        ) {
+            points[i].classList.remove('point');
+            pointScoreTrack++;
+            document.querySelector('.score p').textContent = pointScoreTrack;
 
 
             if (pointScoreTrack === maxPoints) { //if the points were to == to the .length of the total points
                 gameOver(); //run the game over function
                 // nextLevel();
-            } 
-        } 
+            }
+        }
     }
 }
