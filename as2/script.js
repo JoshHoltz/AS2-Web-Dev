@@ -156,7 +156,7 @@ function startGame() {
     document.addEventListener('keyup', keyUp);
 
     //ARROW KEYS
-    document.querySelector('#lbttn').addEventListener('mousedown', function() {
+    document.querySelector('#ubttn').addEventListener('mousedown', function() {
         upPressed = true;
     });
 
