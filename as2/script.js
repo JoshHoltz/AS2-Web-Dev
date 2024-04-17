@@ -81,12 +81,12 @@ let playerTop = 0;
 let playerLeft = 0;
 
 // Collision Detection
-setInterval(function() {
-    if(downPressed == true) {
+setInterval(function () {
+    if (downPressed == true) {
         let position = player.getBoundingClientRect() /*Get the Current location and store it in position*/
         let newBottom = position.bottom + 1; /*to work out the location below we will + 1*/
 
-        let btmL = document.elementFromPoint(position.left, newBottom); 
+        let btmL = document.elementFromPoint(position.left, newBottom);
         let btmR = document.elementFromPoint(position.right, newBottom);
 
 
@@ -97,7 +97,7 @@ setInterval(function() {
         playerMouth.classList = 'down';
     }
 
-    else if(upPressed == true) {
+    else if (upPressed == true) {
         let position = player.getBoundingClientRect();
         let newTop = position.top - 1;
 
@@ -111,21 +111,21 @@ setInterval(function() {
         playerMouth.classList = 'up';
     }
 
-    else if(leftPressed == true) {
+    else if (leftPressed == true) {
         let position = player.getBoundingClientRect();
         let newLeft = position.left - 1;
 
         let topLeft = document.elementFromPoint(newLeft, position.top);
         let bottomLeft = document.elementFromPoint(newLeft, position.bottom);
 
-        if (topLeft.classList.contains('wall')== false && bottomLeft.classList.contains('wall') == false) {
+        if (topLeft.classList.contains('wall') == false && bottomLeft.classList.contains('wall') == false) {
             playerLeft--;
             player.style.left = playerLeft + 'px';
         }
         playerMouth.classList = 'left';
     }
 
-    else if(rightPressed == true) {
+    else if (rightPressed == true) {
         let position = player.getBoundingClientRect();
         let newRight = position.right + 1;
 
@@ -139,7 +139,7 @@ setInterval(function() {
         playerMouth.classList = 'right';
     }
 
-    enemyCheck(); 
+    enemyCheck();
 
     pointCheck();
 
@@ -156,35 +156,35 @@ function startGame() {
     document.addEventListener('keyup', keyUp);
 
     //ARROW KEYS
-    document.querySelector('#ubttn').addEventListener('mousedown', function() {
+    document.querySelector('#ubttn').addEventListener('mousedown', function () {
         upPressed = true;
     });
 
-    document.querySelector('#ubttn').addEventListener('mouseup', function() {
+    document.querySelector('#ubttn').addEventListener('mouseup', function () {
         upPressed = false;
     });
 
-    document.querySelector('#dbttn').addEventListener('mousedown', function() {
+    document.querySelector('#dbttn').addEventListener('mousedown', function () {
         downPressed = true;
     });
 
-    document.querySelector('#dbttn').addEventListener('mouseup', function() {
+    document.querySelector('#dbttn').addEventListener('mouseup', function () {
         downPressed = false;
     });
 
-    document.querySelector('#lbttn').addEventListener('mousedown', function() {
+    document.querySelector('#lbttn').addEventListener('mousedown', function () {
         leftPressed = true;
     });
 
-    document.querySelector('#lbttn').addEventListener('mouseup', function() {
+    document.querySelector('#lbttn').addEventListener('mouseup', function () {
         leftPressed = false;
     });
 
-    document.querySelector('#rbttn').addEventListener('mousedown', function() {
+    document.querySelector('#rbttn').addEventListener('mousedown', function () {
         rightPressed = true;
     });
 
-    document.querySelector('#rbttn').addEventListener('mouseup', function() {
+    document.querySelector('#rbttn').addEventListener('mouseup', function () {
         rightPressed = false;
     });
 
@@ -208,7 +208,7 @@ function nextLevel() {
     document.removeEventListener('keyup', keyUp);
 
     nextBtn.addEventListener('click', restartButton)
-        reloadBrowser();
+    reloadBrowser();
 }
 
 // RESTART GAME
@@ -225,7 +225,7 @@ function restartGame() {
     topFiveLocalStorage();
 
     restartBtn.addEventListener('click', restartButton)
-        reloadBrowser();
+    reloadBrowser();
 }
 
 // GAME OVER
@@ -271,7 +271,7 @@ function updateLives() {
     if (lives >= 0) { //if they lives are not = to or less than 0 run 
         lives--; //remove lives by 1
         totalLives[totalLives.length - 1].remove(); //select the totalLives variable (or .lives li css class) and .remove() once a life has been taken off
-        console.log(lives); 
+        console.log(lives);
     } else {
         console.log('Test');
     }
@@ -290,12 +290,12 @@ colours.forEach(colour => {
 });
 
 function setColour() {
-    player.style.backgroundColor = this.id;    
+    player.style.backgroundColor = this.id;
 }
 
 function closeColourPicker() {
     if (colourPicker.style.display === 'none') { //if pressed
-        colourPicker.style.display = 'block'; 
+        colourPicker.style.display = 'block';
         closeside.textContent = '-'; //if you are displaying change '+' to be '-' to imitate minimise button
     } else {
         colourPicker.style.display = 'none';
@@ -304,7 +304,7 @@ function closeColourPicker() {
 }
 
 // ENEMY DETECTION
-let playerInvincibility = false; 
+let playerInvincibility = false;
 
 function enemyCheck() {
     let position = player.getBoundingClientRect(); //GET PLAYER POSITION 
@@ -313,24 +313,24 @@ function enemyCheck() {
     if (playerInvincibility) return; //if already invincible break out of the loop to stop allowing potential always invincible bug to run
 
     for (const enemy of enemies) {
-        const enemyPosition = enemy.getBoundingClientRect(); 
+        const enemyPosition = enemy.getBoundingClientRect();
 
         if (
             position.right > enemyPosition.left &&
             position.left < enemyPosition.right &&
             position.bottom > enemyPosition.top &&
-            position.top < enemyPosition.bottom 
+            position.top < enemyPosition.bottom
         ) {
             if (playerInvincibility == false) { //if not invincible add the 'hit' css class
-                player.classList.add('hit');  
+                player.classList.add('hit');
                 playerInvincibility = true; //player invinciblity = true now 
             }
 
             setTimeout(() => {
-                player.classList.remove('hit');  
+                player.classList.remove('hit');
                 playerInvincibility = false; //invincibility = false to break 
             }, 3000); //3s iof invincibility 
- 
+
             if (lives <= 0) {  //if lives are less than or = to 0 run restartGame(); as they lost
                 restartGame();
             } else {
@@ -343,38 +343,61 @@ function enemyCheck() {
 // Points Detection
 let pointScoreTrack = 0; //let start of game score = 0 always;
 const maxPoints = document.querySelectorAll('.point').length; //get the maximum points achiveable in the maze by selecting All '.point'.length and store it in maxPoints
-const collectedPoints = new Set(); 
+const collectedPoints = new Set();
 
-function pointCheck() {
-    const position = player.getBoundingClientRect(); //GET PLAYER POSITION 
+// function pointCheck() {
+//     const position = player.getBoundingClientRect(); //GET PLAYER POSITION 
+//     const points = document.querySelectorAll('.point');
+
+//     for (let i = 0; i < points.length; i++) {
+//         let pointPosition = points[i].getBoundingClientRect();
+
+//         // if (
+//         //     position.right > pointPosition.left &&
+//         //     position.left < pointPosition.right &&
+//         //     position.bottom > pointPosition.top &&
+//         //     position.top < pointPosition.bottom &&
+//         //     !collectedPoints.has(points[i]) //if point hasnt been collected you can run, otherwise do not 
+//         // ) {
+//         //     pointScoreTrack++; //if not been collected +1 to score and update 
+//         //     document.querySelector('.score p').textContent = pointScoreTrack;
+
+//         collectedPoints.add(points[i]);
+//         if (collectedPoints.has(points[i])) { //add the new collected points
+//             points[i].classList.add('collected'); //to the css class collected (visibility hidden)
+
+//             if (pointScoreTrack === maxPoints) { //if the points were to == to the .length of the total points
+//                 gameOver(); //run the game over function
+//                 // nextLevel();
+//             }
+
+//             if (pointScoreTrack % 5 === 0) { //COME BACK TO
+//                 // player.classList.add('hit')
+//             }
+//         }
+//     }
+// }
+
+function pointCheck() { 
+    const position = player.getBoundingClientRect(); 
     const points = document.querySelectorAll('.point'); 
+    
+    for (let i = 0; i < points.length; i++) { 
+        let pos = points[i].getBoundingClientRect(); 
+        if (position.right > pos.left && 
+            position.left < pos.right && 
+            position.bottom > pos.top && 
+            position.top < pos.bottom
+            ) { 
+                points[i].classList.remove('point');
+                pointScoreTrack++;
+                document.querySelector('.score p').textContent = pointScoreTrack;
 
-    for (let i = 0; i < points.length; i++) {
-        let pointPosition = points[i].getBoundingClientRect(); 
-
-        if (
-            position.right > pointPosition.left &&
-            position.left < pointPosition.right &&
-            position.bottom > pointPosition.top &&
-            position.top < pointPosition.bottom &&
-            !collectedPoints.has(points[i]) //if point hasnt been collected you can run, otherwise do not 
-        ) {
-            pointScoreTrack++; //if not been collected +1 to score and update 
-            document.querySelector('.score p').textContent = pointScoreTrack;
-
-            collectedPoints.add(points[i]);
-            if (collectedPoints.has(points[i])) { //add the new collected points
-                points[i].classList.add('collected'); //to the css class collected (visibility hidden)
 
             if (pointScoreTrack === maxPoints) { //if the points were to == to the .length of the total points
                 gameOver(); //run the game over function
                 // nextLevel();
-            }
-
-            if (pointScoreTrack % 5 === 0) { //COME BACK TO
-                // player.classList.add('hit')
-            }
-        }
+            } 
+        } 
     }
-}
 }
