@@ -151,10 +151,44 @@ setInterval(function() {
 const startButton = document.querySelector('.start');
 
 function startGame() {
-    startButton.style.display = 'none';
 
     document.addEventListener('keydown', keyDown);
     document.addEventListener('keyup', keyUp);
+
+    //ARROW KEYS
+    document.querySelector('#lbttn').addEventListener('mousedown', function() {
+        upPressed = true;
+    });
+
+    document.querySelector('#ubttn').addEventListener('mouseup', function() {
+        upPressed = false;
+    });
+
+    document.querySelector('#dbttn').addEventListener('mousedown', function() {
+        downPressed = true;
+    });
+
+    document.querySelector('#dbttn').addEventListener('mouseup', function() {
+        downPressed = false;
+    });
+
+    document.querySelector('#lbttn').addEventListener('mousedown', function() {
+        leftPressed = true;
+    });
+
+    document.querySelector('#lbttn').addEventListener('mouseup', function() {
+        leftPressed = false;
+    });
+
+    document.querySelector('#rbttn').addEventListener('mousedown', function() {
+        rightPressed = true;
+    });
+
+    document.querySelector('#rbttn').addEventListener('mouseup', function() {
+        rightPressed = false;
+    });
+
+    startButton.style.display = 'none';
 
     console.log('Game Started')
 }
