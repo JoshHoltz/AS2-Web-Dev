@@ -84,10 +84,10 @@ let playerLeft = 0;
 setInterval(function() {
     if(downPressed == true) {
         let position = player.getBoundingClientRect() /*Get the Current location and store it in position*/
-        let newBottom = position.bottom + 1; 
+        let newBottom = position.bottom + 1; /*to work out the location below we will + 1*/
 
         let btmL = document.elementFromPoint(position.left, newBottom); 
-        let btmR = document.elementFromPoint(position.left, newBottom);
+        let btmR = document.elementFromPoint(position.right, newBottom);
 
 
         if (btmL.classList.contains('wall') == false && btmR.classList.contains('wall') == false) {  /* If btmL or btmR classlist contains 'wall' it is false (cannot move down) move player ++*/
