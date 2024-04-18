@@ -85,7 +85,7 @@ function randomNumber() {
     return Math.floor(Math.random() * 4) + 1;
 }
 
-function moveEnemy() {
+setInterval(function moveEnemy() {
     enemies.forEach(enemy => {
         let enemyPos = enemy.getBoundingClientRect();
         
@@ -93,7 +93,9 @@ function moveEnemy() {
         let direction = randomNumber();
         console.log(direction);
 
-        if (direction === 1) {
+    switch(direction) {
+        // if (direction == 1) {
+        case 1:
             let newBottom = enemyPos.bottom + 1;
             let btmL = document.elementFromPoint(enemyPos.left, newBottom);
             let btmR = document.elementFromPoint(enemyPos.right, newBottom);
@@ -103,19 +105,23 @@ function moveEnemy() {
                 enemy.style.top = enemyTop + 'px';
                 randomNumber();
             }
+            break;
 
-        else if (direction === 2) {
+        // else if (direction == 2) {
+        case 2:
             let newTop = enemyPos.top - 1;
-            let topL = document.elementFromPoint(enemyPos.left, newTop);
-            let topR = document.elementFromPoint(enemyPos.right, newTop);
+            // let topL = document.elementFromPoint(enemyPos.left, newTop);
+            // let topR = document.elementFromPoint(enemyPos.right, newTop);
 
             if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) { 
                 enemyTop--;
                 enemy.style.top = enemyTop + 'px';
                 randomNumber();
             }
+            break;
         
-        else if (direction === 3) {
+        // else if (direction == 3) {
+        case 3:
             let newLeft = enemyPos.left + 1;
             let topL = document.elementFromPoint(newLeft, enemyPos.top);
             let topR = document.elementFromPoint(newLeft, enemyPos.bottom);
@@ -124,24 +130,24 @@ function moveEnemy() {
                 enemyTop--;
                 enemy.style.top = enemyTop + 'px';
                 randomNumber();
-            }}
+            }
+            break;
         
-        else if (direction === 4) {
+        // else if (direction == 4) {
+        case 4:
             let newRight = enemyPos.left + 1;
-            let topL = document.elementFromPoint(newRight, enemyPos.top);
-            let topR = document.elementFromPoint(newRight, enemyPos.bottom);
-    
-            if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) { 
-                enemyTop++;
-                enemy.style.top = enemyTop + 'px';
+            let rightTop = document.elementFromPoint(newRight, enemyPos.top);
+            let rightBottom = document.elementFromPoint(newRight, enemyPos.bottom);
+        
+            if (rightTop.classList.contains('wall') === false && rightBottom.classList.contains('wall') === false) { 
+                enemyLeft++;
+                enemy.style.left = enemyLeft + 'px';
                 randomNumber();
             }
+            break;
         }
-        }}
     });
-}
-
-
+});
 
 const player = document.querySelector('#player');
 const playerMouth = player.querySelector('.mouth');
@@ -211,7 +217,7 @@ setInterval(function () {
 
     pointCheck();
 
-    moveEnemy();
+    // moveEnemy();
 
 }, 10);
 
@@ -259,6 +265,8 @@ function startGame() {
     });
 
     startButton.style.display = 'none';
+
+    setInterval(moveEnemy, 10);
 
     console.log('Game Started')
 }
