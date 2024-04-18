@@ -110,8 +110,8 @@ setInterval(function moveEnemy() {
         // else if (direction == 2) {
         case 2:
             let newTop = enemyPos.top - 1;
-            // let topL = document.elementFromPoint(enemyPos.left, newTop);
-            // let topR = document.elementFromPoint(enemyPos.right, newTop);
+            let topL = document.elementFromPoint(enemyPos.left, newTop);
+            let topR = document.elementFromPoint(enemyPos.right, newTop);
 
             if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) { 
                 enemyTop--;
@@ -123,10 +123,10 @@ setInterval(function moveEnemy() {
         // else if (direction == 3) {
         case 3:
             let newLeft = enemyPos.left + 1;
-            let topL = document.elementFromPoint(newLeft, enemyPos.top);
-            let topR = document.elementFromPoint(newLeft, enemyPos.bottom);
+            let topLeft = document.elementFromPoint(newLeft, enemyPos.top);
+            let topRight = document.elementFromPoint(newLeft, enemyPos.bottom);
     
-            if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) { 
+            if (topLeft.classList.contains('wall') == false && topRight.classList.contains('wall') == false) { 
                 enemyTop--;
                 enemy.style.top = enemyTop + 'px';
                 randomNumber();
