@@ -75,36 +75,72 @@ function keyDown(event) {
     }
 }
 
-//Enemy Movement 
+//ENEMY MOVEMENT
 const enemies = document.querySelectorAll('.enemy');
 const wallEdge = document.querySelectorAll('.wall');
+let enemyTop = 0;
+let enemyLeft = 0;
 
-setInterval(function moveEnemy(event) {
+function randomNumber() {
+    return Math.floor(Math.random() * 4) + 1;
+}
+
+function moveEnemy() {
     enemies.forEach(enemy => {
-        let position = enemy.getBoundingClientRect();
-
-        // wallEdge.forEach(wall => {
-        //     let wallPosition = wall.getBoundingClientRect();
-        // });
+        let enemyPos = enemy.getBoundingClientRect();
         
-        function randomNumber() {
-            return Math.floor(Math.random() * 4) + 1;
-        };
 
         let direction = randomNumber();
-        console.log(direction)
+        console.log(direction);
 
         if (direction === 1) {
-            enemy.style.top = position.top - 1 + 'px';
-        } else if (direction === 2) {
-            enemy.style.top = position.top + 1 + 'px';
-        } else if (direction === 3) {
-            enemy.style.left = position.left - 1 + 'px';
-        } else if (direction === 4) {
-            enemy.style.left = position.left + 1 + 'px';
+            let newBottom = enemyPos.bottom + 1;
+            let btmL = document.elementFromPoint(enemyPos.left, newBottom);
+            let btmR = document.elementFromPoint(enemyPos.right, newBottom);
+            
+            if (btmL.classList.contains('wall') == false && btmR.classList.contains('wall') == false) { 
+                enemyTop++;
+                enemy.style.top = enemyTop + 'px';
+                randomNumber();
+            }
+
+        else if (direction === 2) {
+            let newTop = enemyPos.top - 1;
+            let topL = document.elementFromPoint(enemyPos.left, newTop);
+            let topR = document.elementFromPoint(enemyPos.right, newTop);
+
+            if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) { 
+                enemyTop--;
+                enemy.style.top = enemyTop + 'px';
+                randomNumber();
+            }
+        
+        else if (direction === 3) {
+            let newLeft = enemyPos.left + 1;
+            let topL = document.elementFromPoint(newLeft, enemyPos.top);
+            let topR = document.elementFromPoint(newLeft, enemyPos.bottom);
+    
+            if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) { 
+                enemyTop--;
+                enemy.style.top = enemyTop + 'px';
+                randomNumber();
+            }}
+        
+        else if (direction === 4) {
+            let newRight = enemyPos.left + 1;
+            let topL = document.elementFromPoint(newRight, enemyPos.top);
+            let topR = document.elementFromPoint(newRight, enemyPos.bottom);
+    
+            if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) { 
+                enemyTop++;
+                enemy.style.top = enemyTop + 'px';
+                randomNumber();
+            }
         }
-    })
-}, 1000);
+        }}
+    });
+}
+
 
 
 const player = document.querySelector('#player');
