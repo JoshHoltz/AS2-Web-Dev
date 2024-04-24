@@ -10,16 +10,28 @@ const main = document.querySelector('main');
 //Player = 2, Wall = 1, Enemy = 3, Point = 0
 const maze = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 2, 0, 1, 0, 0, 0, 0, 3, 1],
+    [1, 2, 0, 1, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 1, 1, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 1, 1, 1],
-    [1, 0, 0, 1, 0, 3, 0, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-    [1, 3, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
+
+function randomEnemy() {
+    let row = Math.floor(Math.random() * maze.length);
+    let column = Math.floor(Math.random() * maze[row].length);
+
+    maze[row][column] = 3;
+    console.log(maze);
+}
+
+randomEnemy(); 
+randomEnemy(); 
+randomEnemy(); 
 
 //Populates the maze in the HTML
 for (let y of maze) {
@@ -237,6 +249,9 @@ setInterval(function () {
     pointCheck();
 
     // moveEnemy();
+
+    // randomEnemy();
+
 
 }, 10);
 
