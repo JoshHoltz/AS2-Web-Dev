@@ -25,8 +25,13 @@ function randomEnemy() {
     let row = Math.floor(Math.random() * maze.length);
     let column = Math.floor(Math.random() * maze[row].length);
 
-    maze[row][column] = 3;
-    console.log(maze);
+    if (maze[row][column] == 0) {
+        maze[row][column] = 3;
+    }
+    else {
+        randomEnemy();
+    }
+
 }
 
 randomEnemy(); 
@@ -451,6 +456,7 @@ function enemyCheck() {
             if (lives <= 0) {  //if lives are less than or = to 0 run restartGame(); as they lost
                 restartGame();
             } else {
+                removeLife();
                 updateLives(); //otherwise updateLives();
             }
         }
@@ -517,4 +523,19 @@ function pointCheck() {
             }
         }
     }
+}
+
+function createLife() {
+    const li = document.createElement('li');
+    const ul = document.querySelector('.lives ul');
+    ul.appendChild(li);
+}
+
+createLife();
+createLife();
+createLife();
+
+function removeLife() {
+    const li = document.querySelector('.lives ul li');
+    li.parentNode.removeChild(li);
 }
