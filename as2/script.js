@@ -76,97 +76,97 @@ function keyDown(event) {
 }
 
 //ENEMY MOVEMENT
-const enemies = document.querySelectorAll('.enemy');
-const wallEdge = document.querySelectorAll('.wall');
-let enemyTop = 0;
-let enemyLeft = 0;
+// const enemies = document.querySelectorAll('.enemy');
+// const wallEdge = document.querySelectorAll('.wall');
+// let enemyTop = 0;
+// let enemyLeft = 0;
 
-function randomNumber() {
-    return Math.floor(Math.random() * 4) + 1;
-};
-let direction = randomNumber();
+// function randomNumber() {
+//     return Math.floor(Math.random() * 4) + 1;
+// };
+// let direction = randomNumber();
 
-setInterval(function moveEnemy() {
-    enemies.forEach(enemy => {
-        let enemyPos = enemy.getBoundingClientRect();
+// setInterval(function moveEnemy() {
+//     enemies.forEach(enemy => {
+//         let enemyPos = enemy.getBoundingClientRect();
 
-        // let direction = randomNumber();
-        // console.log(direction);
+//         // let direction = randomNumber();
+//         // console.log(direction);
 
-    switch(direction) {
-        // if (direction == 1) {
-        case 1: //MOVE DOWN
-            let newBottom = enemyPos.bottom + 1;
-            let btmL = document.elementFromPoint(enemyPos.left, newBottom);
-            let btmR = document.elementFromPoint(enemyPos.right, newBottom);
+//     switch(direction) {
+//         // if (direction == 1) {
+//         case 1: //MOVE DOWN
+//             let newBottom = enemyPos.bottom + 1;
+//             let btmL = document.elementFromPoint(enemyPos.left, newBottom);
+//             let btmR = document.elementFromPoint(enemyPos.right, newBottom);
                     
-            console.log('btmL:', btmL);
-            console.log('btmR:', btmR);
+//             console.log('btmL:', btmL);
+//             console.log('btmR:', btmR);
 
-            if (btmL.classList.contains('wall') && btmR.classList.contains('wall')) {
-                enemyTop++;
-                enemy.style.top = enemyTop + 'px';
-                // randomNumber();
-            } else {
-                enemyTop--;
-                direction = randomNumber()
-                // enemy.style.top = enemyTop + 'px';
-            }
-            break;
+//             if (btmL.classList.contains('wall') && btmR.classList.contains('wall')) {
+//                 enemyTop++;
+//                 enemy.style.top = enemyTop + 'px';
+//                 // randomNumber();
+//             } else {
+//                 enemyTop--;
+//                 direction = randomNumber()
+//                 // enemy.style.top = enemyTop + 'px';
+//             }
+//             break;
 
-        // else if (direction == 2) {
-        case 2: //MPVE UP
-            let newTop = enemyPos.top - 1;
-            let topL = document.elementFromPoint(enemyPos.left, newTop);
-            let topR = document.elementFromPoint(enemyPos.right, newTop);
+//         // else if (direction == 2) {
+//         case 2: //MPVE UP
+//             let newTop = enemyPos.top - 1;
+//             let topL = document.elementFromPoint(enemyPos.left, newTop);
+//             let topR = document.elementFromPoint(enemyPos.right, newTop);
 
-            if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) { 
-                enemyTop--;
-                enemy.style.top = enemyTop + 'px';
-                // randomNumber();
-            } else {
-                enemyTop++;
-                direction = randomNumber()
-                // enemy.style.top = enemyTop + 'px';
-            }
-            break;
+//             if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) { 
+//                 enemyTop--;
+//                 enemy.style.top = enemyTop + 'px';
+//                 // randomNumber();
+//             } else {
+//                 enemyTop++;
+//                 direction = randomNumber()
+//                 // enemy.style.top = enemyTop + 'px';
+//             }
+//             break;
         
-        // else if (direction == 3) {
-        case 3: //LEFT
-            let newLeft = enemyPos.left + 1;
-            let topLeft = document.elementFromPoint(newLeft, enemyPos.top);
-            let topRight = document.elementFromPoint(newLeft, enemyPos.bottom);
+//         // else if (direction == 3) {
+//         case 3: //LEFT
+//             let newLeft = enemyPos.left + 1;
+//             let topLeft = document.elementFromPoint(newLeft, enemyPos.top);
+//             let topRight = document.elementFromPoint(newLeft, enemyPos.bottom);
     
-            if (topLeft.classList.contains('wall') == false && topRight.classList.contains('wall') == false) { 
-                enemyTop--;
-                enemy.style.top = enemyTop + 'px';
-                // randomNumber();
-            } else {
-                enemyTop++;
-                direction = randomNumber()
-                // enemy.style.left = enemyTop + 'px';
-            }
-            break;
+//             if (topLeft.classList.contains('wall') == false && topRight.classList.contains('wall') == false) { 
+//                 enemyTop--;
+//                 enemy.style.top = enemyTop + 'px';
+//                 // randomNumber();
+//             } else {
+//                 enemyTop++;
+//                 direction = randomNumber()
+//                 // enemy.style.left = enemyTop + 'px';
+//             }
+//             break;
         
-        // else if (direction == 4) {
-        case 4: //RIGHT
-            let newRight = enemyPos.left + 1;
-            let rightTop = document.elementFromPoint(newRight, enemyPos.top);
-            let rightBottom = document.elementFromPoint(newRight, enemyPos.bottom);
+//         // else if (direction == 4) {
+//         case 4: //RIGHT
+//             let newRight = enemyPos.left + 1;
+//             let rightTop = document.elementFromPoint(newRight, enemyPos.top);
+//             let rightBottom = document.elementFromPoint(newRight, enemyPos.bottom);
         
-            if (rightTop.classList.contains('wall') === false && rightBottom.classList.contains('wall') === false) { 
-                enemyLeft++;
-                enemy.style.left = enemyLeft + 'px';
-                // randomNumber();
-            } else {
-                enemyLeft--;
-                direction = randomNumber()
-                // enemy.style.left = enemyLeft + 'px';
-            }
-            break;
-        }
-    });
-});
+//             if (rightTop.classList.contains('wall') === false && rightBottom.classList.contains('wall') === false) { 
+//                 enemyLeft++;
+//                 enemy.style.left = enemyLeft + 'px';
+//                 // randomNumber();
+//             } else {
+//                 enemyLeft--;
+//                 direction = randomNumber()
+//                 // enemy.style.left = enemyLeft + 'px';
+//             }
+//             break;
+//         }
+//     });
+// });
 
 const player = document.querySelector('#player');
 const playerMouth = player.querySelector('.mouth');
