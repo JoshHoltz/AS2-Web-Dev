@@ -134,10 +134,7 @@ setInterval(function moveEnemy() {
       let enemyTop = parseInt(enemy.style.top) || 0; //PARSE INT SO ITS NOT RETURNING A STRING!!!!
       let enemyLeft = parseInt(enemy.style.left) || 0;
       let direction = enemy.direction || randomNumber();
-  
-      let newTop, newBottom, newLeft, newRight;
-      let topL, topR, btmL, btmR, leftT, leftB, rightT, rightB;
-  
+    
       switch (direction) {
         case 1: // MPVE DOWN
           newBottom = enemyPos.bottom + 1;
@@ -163,9 +160,9 @@ setInterval(function moveEnemy() {
   
         case 3: //LEFT
           newLeft = enemyPos.left - 1;
-          leftT = document.elementFromPoint(newLeft, enemyPos.top);
-          leftB = document.elementFromPoint(newLeft, enemyPos.bottom);
-          if (leftT.classList.contains('wall') == false && leftB.classList.contains('wall') == false) {
+          leftTop = document.elementFromPoint(newLeft, enemyPos.top);
+          leftBottom = document.elementFromPoint(newLeft, enemyPos.bottom);
+          if (leftTop.classList.contains('wall') == false && leftBottom.classList.contains('wall') == false) {
             enemyLeft--;
           } else {
             direction = randomNumber();
@@ -174,9 +171,9 @@ setInterval(function moveEnemy() {
   
         case 4: //RIGHT
           newRight = enemyPos.right + 1;
-          rightT = document.elementFromPoint(newRight, enemyPos.top);
-          rightB = document.elementFromPoint(newRight, enemyPos.bottom);
-          if (rightT.classList.contains('wall') == false && rightB.classList.contains('wall') == false) {
+          rightTop = document.elementFromPoint(newRight, enemyPos.top);
+          rightBottom = document.elementFromPoint(newRight, enemyPos.bottom);
+          if (rightTop.classList.contains('wall') == false && rightBottom.classList.contains('wall') == false) {
             enemyLeft++;
           } else {
             direction = randomNumber();
@@ -549,13 +546,13 @@ function pointCheck() {
                 // gameOver(); //run the game over function
                 nextLevel();
             }
-            if (pointScoreTrack === 5) { 
-                setTimeout(powerUp, 7000);
-                playerInvincibility = false;
+            // if (pointScoreTrack === 5) { 
+            //     setTimeout(powerUp, 7000);
+            //     playerInvincibility = false;
             }
         }
-    }
-};
+    };
+// };
 
 function createLife() {
     const li = document.createElement('li');
