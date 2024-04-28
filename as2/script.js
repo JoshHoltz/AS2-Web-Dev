@@ -7,19 +7,35 @@ let lives = 2;
 
 const main = document.querySelector('main');
 
-//Player = 2, Wall = 1, Enemy = 3, Point = 0
+//Player = 2, Wall = 1, Enemy = 3, Point = 0, solveablePath = 5
 const maze = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 2, 0, 1, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 1, 1, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 1, 1, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 1, 1, 1],
-    [1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+    [1, 2, 5, 1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 5, 0, 5, 5, 0, 1, 5, 1],
+    [1, 0, 5, 0, 0, 0, 5, 5, 5, 1],
+    [1, 0, 5, 1, 0, 0, 5, 5, 5, 1],
+    [1, 0, 0, 0, 0, 5, 0, 1, 1, 1],
+    [1, 0, 0, 1, 0, 5, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 5, 0, 1],
     [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
+
+function randomMaze() {
+    let row = Math.floor(Math.random() * maze.length);
+    let column = Math.floor(Math.random() * maze[row].length);
+
+    if (maze[row][column] == 0) {
+        maze[row][column] = 1;
+    }
+    else {
+        randomMaze();
+    }
+}
+
+randomMaze();
+randomMaze();
+randomMaze();
 
 function randomEnemy() {
     let row = Math.floor(Math.random() * maze.length);
@@ -490,6 +506,28 @@ const maxPoints = document.querySelectorAll('.point').length; //get the maximum 
 //     }
 // }
 
+function powerUp() { //NOT WORKING COME BACK TO
+    playerInvincibility = true;
+    console.log('powerup')
+    let position = player.getBoundingClientRect(); //GET PLAYER POSITION 
+    const enemies = document.querySelectorAll('.enemy');
+
+
+    for (const enemy of enemies) {
+        const enemyPosition = enemy.getBoundingClientRect();
+
+        if (
+            position.right > enemyPosition.left &&
+            position.left < enemyPosition.right &&
+            position.bottom > enemyPosition.top &&
+            position.top < enemyPosition.bottom
+        ) {
+            enemy.remove();
+            console.log('test');
+        }
+    };
+}
+
 function pointCheck() {
     const position = player.getBoundingClientRect(); //get player position
     const points = document.querySelectorAll('.point'); //select all with class with points
@@ -510,9 +548,13 @@ function pointCheck() {
                 gameOver(); //run the game over function
                 // nextLevel();
             }
+            if (pointScoreTrack === 5) { 
+                setTimeout(powerUp, 7000);
+                playerInvincibility = false;
+            }
         }
     }
-}
+};
 
 function createLife() {
     const li = document.createElement('li');
@@ -527,4 +569,4 @@ createLife();
 function removeLife() {
     const li = document.querySelector('.lives ul li');
     li.parentNode.removeChild(li);
-}
+};
