@@ -95,8 +95,8 @@ function keyDown(event) {
 //ENEMY MOVEMENT
 const enemies = document.querySelectorAll('.enemy');
 const wallEdge = document.querySelectorAll('.wall');
-let enemyTop = 0;
-let enemyLeft = 0;
+// let enemyTop = 0;
+// let enemyLeft = 0;
 
 function randomNumber() {
     return Math.floor(Math.random() * 4) + 1;
@@ -107,7 +107,10 @@ setInterval(function moveEnemy() {
     enemies.forEach(enemy => {
         let enemyPos = enemy.getBoundingClientRect();
         let newDirection = randomNumber(); 
-        // console.log(newDirection);
+        let enemyTop = 0;
+        let enemyLeft = 0;
+        // let newDirection = 1;
+        console.log(newDirection);
 
         switch(newDirection) {
             case 1: //MOVE DOWN
@@ -170,7 +173,7 @@ setInterval(function moveEnemy() {
                 break;
         }
     });
-}, 100); 
+}, 10); 
 
 const player = document.querySelector('#player');
 const playerMouth = player.querySelector('.mouth');
@@ -292,7 +295,7 @@ function startGame() {
 
     startButton.style.display = 'none';
 
-    setInterval(moveEnemy, 50000);
+    // setInterval(moveEnemy, 50000);
 
     console.log('Game Started')
 }
