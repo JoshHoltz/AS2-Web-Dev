@@ -130,75 +130,66 @@ let direction = randomNumber();
 
 setInterval(function moveEnemy() {
     enemies.forEach(enemy => {
-        let enemyPos = enemy.getBoundingClientRect();
-        let newDirection = randomNumber(); 
-        let enemyTop = 0;
-        let enemyLeft = 0;
-        // let newDirection = 1;
-        // console.log(newDirection);
-
-        switch(newDirection) {
-            case 1: //MOVE DOWN
-                let newBottom = enemyPos.bottom + 1;
-                let btmL = document.elementFromPoint(enemyPos.left, newBottom);
-                let btmR = document.elementFromPoint(enemyPos.right, newBottom);
-
-                // console.log('btmL:', btmL);
-                // console.log('btmR:', btmR);
-                        
-                if (btmL.classList.contains('wall') && btmR.classList.contains('wall')) {
-                    enemyTop++; 
-                    enemy.style.top = enemyTop + 'px'; 
-                } else {
-                    enemyTop--;
-                    enemy.style.top = enemyTop + 'px';
-                }
-                break;
-
-            case 2: //MPVE UP
-                let newTop = enemyPos.top - 1;
-                let topL = document.elementFromPoint(enemyPos.left, newTop);
-                let topR = document.elementFromPoint(enemyPos.right, newTop);
-
-                if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) { 
-                    enemyTop--; 
-                    enemy.style.top = enemyTop + 'px'; 
-                } else {
-                    enemyTop++;
-                    enemy.style.top = enemyTop + 'px';
-                }
-                break;
-            
-            case 3: //LEFT
-                let newLeft = enemyPos.left - 1; 
-                let topLeft = document.elementFromPoint(newLeft, enemyPos.top);
-                let topRight = document.elementFromPoint(newLeft, enemyPos.bottom);
-        
-                if (topLeft.classList.contains('wall') == false && topRight.classList.contains('wall') == false) { 
-                    enemyLeft--;
-                    enemy.style.left = enemyLeft + 'px'; 
-                } else {
-                    enemyLeft++;
-                    enemy.style.left = enemyLeft + 'px';
-                }
-                break;
-            
-            case 4: //RIGHT
-                let newRight = enemyPos.right + 1; 
-                let rightTop = document.elementFromPoint(newRight, enemyPos.top);
-                let rightBottom = document.elementFromPoint(newRight, enemyPos.bottom);
-            
-                if (rightTop.classList.contains('wall') === false && rightBottom.classList.contains('wall') === false) { 
-                    enemyLeft++; 
-                    enemy.style.left = enemyLeft + 'px'; 
-                } else {
-                    enemyLeft--;
-                    enemy.style.left = enemyLeft + 'px';
-                }
-                break;
-        }
+      let enemyPos = enemy.getBoundingClientRect();
+      let enemyTop = parseInt(enemy.style.top) || 0; //PARSE INT SO ITS NOT RETURNING A STRING!!!!
+      let enemyLeft = parseInt(enemy.style.left) || 0;
+      let direction = enemy.direction || randomNumber();
+  
+      let newTop, newBottom, newLeft, newRight;
+      let topL, topR, btmL, btmR, leftT, leftB, rightT, rightB;
+  
+      switch (direction) {
+        case 1: // MPVE DOWN
+          newBottom = enemyPos.bottom + 1;
+          btmL = document.elementFromPoint(enemyPos.left, newBottom);
+          btmR = document.elementFromPoint(enemyPos.right, newBottom);
+          if (btmL.classList.contains('wall') == false && btmR.classList.contains('wall') == false) {
+            enemyTop++;
+          } else {
+            direction = randomNumber();
+          }
+          break;
+  
+        case 2: // MOVE UP
+          newTop = enemyPos.top - 1;
+          topL = document.elementFromPoint(enemyPos.left, newTop);
+          topR = document.elementFromPoint(enemyPos.right, newTop);
+          if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) {
+            enemyTop--;
+          } else {
+            direction = randomNumber();
+          }
+          break;
+  
+        case 3: //LEFT
+          newLeft = enemyPos.left - 1;
+          leftT = document.elementFromPoint(newLeft, enemyPos.top);
+          leftB = document.elementFromPoint(newLeft, enemyPos.bottom);
+          if (leftT.classList.contains('wall') == false && leftB.classList.contains('wall') == false) {
+            enemyLeft--;
+          } else {
+            direction = randomNumber();
+          }
+          break;
+  
+        case 4: //RIGHT
+          newRight = enemyPos.right + 1;
+          rightT = document.elementFromPoint(newRight, enemyPos.top);
+          rightB = document.elementFromPoint(newRight, enemyPos.bottom);
+          if (rightT.classList.contains('wall') == false && rightB.classList.contains('wall') == false) {
+            enemyLeft++;
+          } else {
+            direction = randomNumber();
+          }
+          break;
+      }
+  
+      enemy.style.top = enemyTop + 'px';
+      enemy.style.left = enemyLeft + 'px';
+      enemy.direction = direction;
     });
-}, 10); 
+  }, 10);
+
 
 const player = document.querySelector('#player');
 const playerMouth = player.querySelector('.mouth');
