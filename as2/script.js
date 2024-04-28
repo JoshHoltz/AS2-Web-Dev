@@ -143,8 +143,8 @@ setInterval(function moveEnemy() {
             
             case 3: //LEFT
                 let newLeft = enemyPos.left - 1; 
-                let leftT = document.elementFromPoint(newLeft, enemyPos.top);
-                let leftB = document.elementFromPoint(newLeft, enemyPos.bottom);
+                let topLeft = document.elementFromPoint(newLeft, enemyPos.top);
+                let topRight = document.elementFromPoint(newLeft, enemyPos.bottom);
         
                 if (topLeft.classList.contains('wall') == false && topRight.classList.contains('wall') == false) { 
                     enemyLeft--;
@@ -157,8 +157,8 @@ setInterval(function moveEnemy() {
             
             case 4: //RIGHT
                 let newRight = enemyPos.right + 1; 
-                let rightT = document.elementFromPoint(newRight, enemyPos.top);
-                let rightB = document.elementFromPoint(newRight, enemyPos.bottom);
+                let rightTop = document.elementFromPoint(newRight, enemyPos.top);
+                let rightBottom = document.elementFromPoint(newRight, enemyPos.bottom);
             
                 if (rightTop.classList.contains('wall') === false && rightBottom.classList.contains('wall') === false) { 
                     enemyLeft++; 
@@ -170,7 +170,7 @@ setInterval(function moveEnemy() {
                 break;
         }
     });
-}, 1000); 
+}, 100); 
 
 const player = document.querySelector('#player');
 const playerMouth = player.querySelector('.mouth');
