@@ -10,14 +10,14 @@ const main = document.querySelector('main');
 //Player = 2, Wall = 1, Enemy = 3, Point = 0, solveablePath = 5
 const maze = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 2, 5, 1, 0, 0, 0, 0, 0, 1],
+    [1, 2, 5, 1, 0, 0, 0, 5, 0, 1],
     [1, 0, 5, 0, 5, 5, 0, 1, 5, 1],
     [1, 0, 5, 0, 0, 0, 5, 5, 5, 1],
     [1, 0, 5, 1, 0, 0, 5, 5, 5, 1],
     [1, 0, 0, 0, 0, 5, 0, 1, 1, 1],
-    [1, 0, 0, 1, 0, 5, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 5, 0, 1],
-    [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 1, 0, 5, 0, 5, 0, 1],
+    [1, 5, 0, 0, 0, 0, 0, 5, 0, 1],
+    [1, 0, 5, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
 
@@ -37,12 +37,15 @@ randomMaze();
 randomMaze();
 randomMaze();
 
+
+let enemiesAdded = 3; //start from 3 for the starting number
 function randomEnemy() {
     let row = Math.floor(Math.random() * maze.length);
     let column = Math.floor(Math.random() * maze[row].length);
 
     if (maze[row][column] == 0) {
         maze[row][column] = 3;
+        enemiesAdded++;
     }
     else {
         randomEnemy();
@@ -53,6 +56,12 @@ function randomEnemy() {
 randomEnemy(); 
 randomEnemy(); 
 randomEnemy(); 
+
+function increaseEnemy() {
+    if (enemiesAdded < 10) {
+        randomEnemy();
+    }
+}
 
 //Populates the maze in the HTML
 for (let y of maze) {
@@ -321,7 +330,7 @@ startButton.addEventListener('click', startGame)
 // NEXT LEVEL
 const nextButton = document.querySelector('.next');
 nextButton.style.display = 'none';
-let nextBtn = nextButton.addEventListener('click', reloadBrowser)
+let nextBtn = nextButton.addEventListener('click', nextLevel)
 
 function nextLevel() {
 
@@ -330,8 +339,9 @@ function nextLevel() {
     document.removeEventListener('keydown', keyDown);
     document.removeEventListener('keyup', keyUp);
 
-    nextBtn.addEventListener('click', restartButton)
-    reloadBrowser();
+    nextBtn.addEventListener('click', nextLevel())
+    
+    increaseEnemy();
 }
 
 // RESTART GAME
@@ -545,8 +555,8 @@ function pointCheck() {
 
 
             if (pointScoreTrack === maxPoints) { //if the points were to == to the .length of the total points
-                gameOver(); //run the game over function
-                // nextLevel();
+                // gameOver(); //run the game over function
+                nextLevel();
             }
             if (pointScoreTrack === 5) { 
                 setTimeout(powerUp, 7000);
