@@ -110,7 +110,7 @@ setInterval(function moveEnemy() {
         let enemyTop = 0;
         let enemyLeft = 0;
         // let newDirection = 1;
-        console.log(newDirection);
+        // console.log(newDirection);
 
         switch(newDirection) {
             case 1: //MOVE DOWN
@@ -125,7 +125,7 @@ setInterval(function moveEnemy() {
                     enemyTop++; 
                     enemy.style.top = enemyTop + 'px'; 
                 } else {
-                    enemyTop++;
+                    enemyTop--;
                     enemy.style.top = enemyTop + 'px';
                 }
                 break;
@@ -139,7 +139,7 @@ setInterval(function moveEnemy() {
                     enemyTop--; 
                     enemy.style.top = enemyTop + 'px'; 
                 } else {
-                    enemyTop--;
+                    enemyTop++;
                     enemy.style.top = enemyTop + 'px';
                 }
                 break;
@@ -153,7 +153,7 @@ setInterval(function moveEnemy() {
                     enemyLeft--;
                     enemy.style.left = enemyLeft + 'px'; 
                 } else {
-                    enemyLeft--;
+                    enemyLeft++;
                     enemy.style.left = enemyLeft + 'px';
                 }
                 break;
@@ -167,7 +167,7 @@ setInterval(function moveEnemy() {
                     enemyLeft++; 
                     enemy.style.left = enemyLeft + 'px'; 
                 } else {
-                    enemyLeft++;
+                    enemyLeft--;
                     enemy.style.left = enemyLeft + 'px';
                 }
                 break;
@@ -382,7 +382,6 @@ function updateLives() {
 
     if (lives >= 0) { //if they lives are not = to or less than 0 run 
         lives--; //remove lives by 1
-        totalLives[totalLives.length - 1].remove(); //select the totalLives variable (or .lives li css class) and .remove() once a life has been taken off
         console.log(lives);
     } else {
         console.log('Test');
