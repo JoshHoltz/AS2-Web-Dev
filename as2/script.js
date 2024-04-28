@@ -194,74 +194,78 @@ let playerTop = 0;
 let playerLeft = 0;
 
 // Collision Detection
-setInterval(function () {
-    if (downPressed == true) {
-        let position = player.getBoundingClientRect() /*Get the Current location and store it in position*/
-        let newBottom = position.bottom + 1; /*to work out the location below we will + 1*/
+function playerSpeed(speed) {
+    return setInterval(function () {
+        if (downPressed == true) {
+            let position = player.getBoundingClientRect() /*Get the Current location and store it in position*/
+            let newBottom = position.bottom + 1; /*to work out the location below we will + 1*/
 
-        let btmL = document.elementFromPoint(position.left, newBottom);
-        let btmR = document.elementFromPoint(position.right, newBottom);
+            let btmL = document.elementFromPoint(position.left, newBottom);
+            let btmR = document.elementFromPoint(position.right, newBottom);
 
 
-        if (btmL.classList.contains('wall') == false && btmR.classList.contains('wall') == false) {  /* If btmL or btmR classlist contains 'wall' it is false (cannot move down) move player ++*/
-            playerTop++;
-            player.style.top = playerTop + 'px';
+            if (btmL.classList.contains('wall') == false && btmR.classList.contains('wall') == false) {  /* If btmL or btmR classlist contains 'wall' it is false (cannot move down) move player ++*/
+                playerTop++;
+                player.style.top = playerTop + 'px';
+            }
+            playerMouth.classList = 'down';
         }
-        playerMouth.classList = 'down';
-    }
 
-    else if (upPressed == true) {
-        let position = player.getBoundingClientRect();
-        let newTop = position.top - 1;
+        else if (upPressed == true) {
+            let position = player.getBoundingClientRect();
+            let newTop = position.top - 1;
 
-        let topL = document.elementFromPoint(position.left, newTop);
-        let topR = document.elementFromPoint(position.right, newTop);
+            let topL = document.elementFromPoint(position.left, newTop);
+            let topR = document.elementFromPoint(position.right, newTop);
 
-        if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) {
-            playerTop--;
-            player.style.top = playerTop + 'px';
+            if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) {
+                playerTop--;
+                player.style.top = playerTop + 'px';
+            }
+            playerMouth.classList = 'up';
         }
-        playerMouth.classList = 'up';
-    }
 
-    else if (leftPressed == true) {
-        let position = player.getBoundingClientRect();
-        let newLeft = position.left - 1;
+        else if (leftPressed == true) {
+            let position = player.getBoundingClientRect();
+            let newLeft = position.left - 1;
 
-        let topLeft = document.elementFromPoint(newLeft, position.top);
-        let bottomLeft = document.elementFromPoint(newLeft, position.bottom);
+            let topLeft = document.elementFromPoint(newLeft, position.top);
+            let bottomLeft = document.elementFromPoint(newLeft, position.bottom);
 
-        if (topLeft.classList.contains('wall') == false && bottomLeft.classList.contains('wall') == false) {
-            playerLeft--;
-            player.style.left = playerLeft + 'px';
+            if (topLeft.classList.contains('wall') == false && bottomLeft.classList.contains('wall') == false) {
+                playerLeft--;
+                player.style.left = playerLeft + 'px';
+            }
+            playerMouth.classList = 'left';
         }
-        playerMouth.classList = 'left';
-    }
 
-    else if (rightPressed == true) {
-        let position = player.getBoundingClientRect();
-        let newRight = position.right + 1;
+        else if (rightPressed == true) {
+            let position = player.getBoundingClientRect();
+            let newRight = position.right + 1;
 
-        let topRight = document.elementFromPoint(newRight, position.top);
-        let bottomRight = document.elementFromPoint(newRight, position.bottom);
+            let topRight = document.elementFromPoint(newRight, position.top);
+            let bottomRight = document.elementFromPoint(newRight, position.bottom);
 
-        if (topRight.classList.contains('wall') == false && bottomRight.classList.contains('wall') == false) {
-            playerLeft++;
-            player.style.left = playerLeft + 'px';
+            if (topRight.classList.contains('wall') == false && bottomRight.classList.contains('wall') == false) {
+                playerLeft++;
+                player.style.left = playerLeft + 'px';
+            }
+            playerMouth.classList = 'right';
         }
-        playerMouth.classList = 'right';
-    }
 
-    enemyCheck();
+        enemyCheck();
 
-    pointCheck();
+        pointCheck();
 
-    // moveEnemy();
+        // moveEnemy();
 
-    // randomEnemy();
+        // randomEnemy();
 
 
-}, 10);
+    }, speed);
+};
+
+playerSpeed(10);
 
 // START, NEXT, AND, RESTART BUTTONS //
 
@@ -307,8 +311,6 @@ function startGame() {
     });
 
     startButton.style.display = 'none';
-
-    // setInterval(moveEnemy, 50000);
 
     console.log('Game Started')
 }
@@ -504,27 +506,17 @@ const maxPoints = document.querySelectorAll('.point').length; //get the maximum 
 //     }
 // }
 
-function powerUp() { //NOT WORKING COME BACK TO
+
+function powerUp() {
+    // playerSpeed(3);
     playerInvincibility = true;
-    console.log('powerup')
-    let position = player.getBoundingClientRect(); //GET PLAYER POSITION 
-    const enemies = document.querySelectorAll('.enemy');
 
-
-    for (const enemy of enemies) {
-        const enemyPosition = enemy.getBoundingClientRect();
-
-        if (
-            position.right > enemyPosition.left &&
-            position.left < enemyPosition.right &&
-            position.bottom > enemyPosition.top &&
-            position.top < enemyPosition.bottom
-        ) {
-            enemy.remove();
-            console.log('test');
-        }
-    };
+    setTimeout(() => {
+        // playerSpeed(10); 
+        playerInvincibility = false;
+    }, 5000);
 }
+
 
 function pointCheck() {
     const position = player.getBoundingClientRect(); //get player position
@@ -546,13 +538,15 @@ function pointCheck() {
                 // gameOver(); //run the game over function
                 nextLevel();
             }
-            // if (pointScoreTrack === 5) { 
-            //     setTimeout(powerUp, 7000);
-            //     playerInvincibility = false;
+            if (pointScoreTrack === 5) {
+                powerUp();
             }
+            setTimeout(() => {
+                powerUp(); 
+            }, 3000);
         }
-    };
-// };
+    }
+}
 
 function createLife() {
     const li = document.createElement('li');
