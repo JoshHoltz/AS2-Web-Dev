@@ -343,6 +343,31 @@ function startGame() {
 
 startButton.addEventListener('click', startGame)
 
+// NEXT LEVEL
+levelTracker = 0
+hiddenScore = 0
+const nextButton = document.querySelector('.next');
+nextButton.style.display = 'none';
+// let nextBtn = nextButton.addEventListener('click', reloadBrowser)
+let nextBtn = nextButton.addEventListener('click', nextLevel)
+
+function nextLevel() {
+    carryOverPoints = levelTracker * maxPoints
+    levelTracker++;
+    
+    nextButton.style.display = 'flex';
+
+    document.removeEventListener('keydown', keyDown);
+    document.removeEventListener('keyup', keyUp);
+
+    // nextBtn.addEventListener('click', gameOver)
+
+    document.querySelector('.score p').textContent = carryOverPoints;
+    // console.log(levelTracker);
+    console.log(carryOverPoints);
+    console.log(levelTracker);
+}
+
 // RESTART GAME
 const restartButton = document.querySelector('.restart');
 restartButton.style.display = 'none';
@@ -534,32 +559,3 @@ function removeLife() {
     const li = document.querySelector('.lives ul li');
     li.parentNode.removeChild(li);
 };
-
-
-levelTracker = 0
-hiddenScore = 0
-// carryOverPoints = levelTracker * maxPoints
-// NEXT LEVEL
-const nextButton = document.querySelector('.next');
-nextButton.style.display = 'none';
-// let nextBtn = nextButton.addEventListener('click', reloadBrowser)
-let nextBtn = nextButton.addEventListener('click', nextLevel)
-
-
-function nextLevel() {
-    carryOverPoints = levelTracker * maxPoints
-    levelTracker++;
-    // increaseEnemy();
-    
-    nextButton.style.display = 'flex';
-
-    document.removeEventListener('keydown', keyDown);
-    document.removeEventListener('keyup', keyUp);
-
-    // // nextBtn.addEventListener('click', restartButton)
-
-    document.querySelector('.score p').textContent = carryOverPoints;
-    // console.log(levelTracker);
-    console.log(carryOverPoints);
-    console.log(levelTracker);
-}
