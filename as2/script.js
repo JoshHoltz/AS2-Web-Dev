@@ -193,6 +193,7 @@ const playerMouth = player.querySelector('.mouth');
 let playerTop = 0;
 let playerLeft = 0;
 
+
 // Collision Detection
 function playerSpeed(speed) {
     return setInterval(function () {
@@ -277,38 +278,63 @@ function startGame() {
     document.addEventListener('keydown', keyDown);
     document.addEventListener('keyup', keyUp);
 
-    //ARROW KEYS
-    document.querySelector('#ubttn').addEventListener('mousedown', function () {
-        upPressed = true;
-    });
+    // //ARROW KEYS
+    // document.querySelector('#ubttn').addEventListener('mousedown', function () {
+    //     upPressed = true;
+    // });
 
-    document.querySelector('#ubttn').addEventListener('mouseup', function () {
-        upPressed = false;
-    });
+    // document.querySelector('#ubttn').addEventListener('mouseup', function () {
+    //     upPressed = false;
+    // });
 
-    document.querySelector('#dbttn').addEventListener('mousedown', function () {
-        downPressed = true;
-    });
+    // document.querySelector('#dbttn').addEventListener('mousedown', function () {
+    //     downPressed = true;
+    // });
 
-    document.querySelector('#dbttn').addEventListener('mouseup', function () {
-        downPressed = false;
-    });
+    // document.querySelector('#dbttn').addEventListener('mouseup', function () {
+    //     downPressed = false;
+    // });
 
-    document.querySelector('#lbttn').addEventListener('mousedown', function () {
+    // document.querySelector('#lbttn').addEventListener('mousedown', function () {
+    //     leftPressed = true;
+    // });
+
+    // document.querySelector('#lbttn').addEventListener('mouseup', function () {
+    //     leftPressed = false;
+    // });
+
+    // document.querySelector('#rbttn').addEventListener('mousedown', function () {
+    //     rightPressed = true;
+    // });
+
+    // document.querySelector('#rbttn').addEventListener('mouseup', function () {
+    //     rightPressed = false;
+    // });
+
+    let leftButton = document.getElementById("lbttn");
+    leftButton.addEventListener('mousedown', goleft)
+    function goleft() {
         leftPressed = true;
-    });
+    }
 
-    document.querySelector('#lbttn').addEventListener('mouseup', function () {
-        leftPressed = false;
-    });
-
-    document.querySelector('#rbttn').addEventListener('mousedown', function () {
+    let rightButton = document.getElementById("rbttn");
+    rightButton.addEventListener('mousedown', goright)
+    function goright() {
         rightPressed = true;
-    });
+    }
 
-    document.querySelector('#rbttn').addEventListener('mouseup', function () {
-        rightPressed = false;
-    });
+    let upButton = document.getElementById("ubttn");
+    upButton.addEventListener('mousedown', gotop)
+    function gotop() {
+        upPressed = true;
+    }
+
+    let downButton = document.getElementById("dbttn");
+    downButton.addEventListener('mousedown', godown)
+    function godown() {
+        downPressed = true;
+    }
+
 
     startButton.style.display = 'none';
 
@@ -316,23 +342,6 @@ function startGame() {
 }
 
 startButton.addEventListener('click', startGame)
-
-// NEXT LEVEL
-const nextButton = document.querySelector('.next');
-nextButton.style.display = 'none';
-let nextBtn = nextButton.addEventListener('click', nextLevel)
-
-function nextLevel() {
-
-    nextButton.style.display = 'flex';
-
-    document.removeEventListener('keydown', keyDown);
-    document.removeEventListener('keyup', keyUp);
-
-    nextBtn.addEventListener('click', nextLevel())
-    
-    increaseEnemy();
-}
 
 // RESTART GAME
 const restartButton = document.querySelector('.restart');
@@ -468,56 +477,20 @@ function enemyCheck() {
     }
 }
 
+// let powerUpActive = false;
+// function powerUp() {
+//     powerUpActive = true;
+//     player.classList.add('powerUp');
+//     playerInvincibility = true;
+
+//     setTimeout(() => {
+        
+//     }, 5000);
+// }
+
 // Points Detection
 let pointScoreTrack = 0; //let start of game score = 0 always;
 const maxPoints = document.querySelectorAll('.point').length; //get the maximum points achiveable in the maze by selecting All '.point'.length and store it in maxPoints
-// const collectedPoints = new Set();
-
-// function pointCheck() {
-//     const position = player.getBoundingClientRect(); //GET PLAYER POSITION 
-//     const points = document.querySelectorAll('.point');
-
-//     for (let i = 0; i < points.length; i++) {
-//         let pointPosition = points[i].getBoundingClientRect();
-
-//         // if (
-//         //     position.right > pointPosition.left &&
-//         //     position.left < pointPosition.right &&
-//         //     position.bottom > pointPosition.top &&
-//         //     position.top < pointPosition.bottom &&
-//         //     !collectedPoints.has(points[i]) //if point hasnt been collected you can run, otherwise do not 
-//         // ) {
-//         //     pointScoreTrack++; //if not been collected +1 to score and update 
-//         //     document.querySelector('.score p').textContent = pointScoreTrack;
-
-//         collectedPoints.add(points[i]);
-//         if (collectedPoints.has(points[i])) { //add the new collected points
-//             points[i].classList.add('collected'); //to the css class collected (visibility hidden)
-
-//             if (pointScoreTrack === maxPoints) { //if the points were to == to the .length of the total points
-//                 gameOver(); //run the game over function
-//                 // nextLevel();
-//             }
-
-//             if (pointScoreTrack % 5 === 0) { //COME BACK TO
-//                 // player.classList.add('hit')
-//             }
-//         }
-//     }
-// }
-
-
-function powerUp() {
-    // playerSpeed(3);
-    playerInvincibility = true;
-
-    setTimeout(() => {
-        // playerSpeed(10); 
-        playerInvincibility = false;
-    }, 5000);
-}
-
-
 function pointCheck() {
     const position = player.getBoundingClientRect(); //get player position
     const points = document.querySelectorAll('.point'); //select all with class with points
@@ -535,15 +508,14 @@ function pointCheck() {
 
 
             if (pointScoreTrack === maxPoints) { //if the points were to == to the .length of the total points
-                // gameOver(); //run the game over function
-                nextLevel();
+                gameOver(); //run the game over function
+                // nextLevel();
             }
-            if (pointScoreTrack === 5) {
-                powerUp();
-            }
-            setTimeout(() => {
-                powerUp(); 
-            }, 3000);
+            // if (pointScoreTrack / 2 && !powerUpActive) {
+            //     powerUp();
+            // } else {
+            //     playerSpeed(10);
+            // }
         }
     }
 }
@@ -562,3 +534,32 @@ function removeLife() {
     const li = document.querySelector('.lives ul li');
     li.parentNode.removeChild(li);
 };
+
+
+levelTracker = 0
+hiddenScore = 0
+// carryOverPoints = levelTracker * maxPoints
+// NEXT LEVEL
+const nextButton = document.querySelector('.next');
+nextButton.style.display = 'none';
+// let nextBtn = nextButton.addEventListener('click', reloadBrowser)
+let nextBtn = nextButton.addEventListener('click', nextLevel)
+
+
+function nextLevel() {
+    carryOverPoints = levelTracker * maxPoints
+    levelTracker++;
+    // increaseEnemy();
+    
+    nextButton.style.display = 'flex';
+
+    document.removeEventListener('keydown', keyDown);
+    document.removeEventListener('keyup', keyUp);
+
+    // // nextBtn.addEventListener('click', restartButton)
+
+    document.querySelector('.score p').textContent = carryOverPoints;
+    // console.log(levelTracker);
+    console.log(carryOverPoints);
+    console.log(levelTracker);
+}

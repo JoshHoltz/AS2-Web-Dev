@@ -323,3 +323,25 @@ aside li:nth-child(10) {background-color: #ffffff;}
     align-items: center;
     justify-content: center;
 }
+
+@keyframes changeBackgroundColor {
+    0% {
+        background-color: #001F3F;
+    }
+
+    50% {
+        background-color: #FF4136;
+    }
+
+    75% {
+        background-color: #001F3F;
+    }
+
+    100% {
+        background-color: yellow;
+    }
+}
+
+.powerUp {
+    animation: changeBackgroundColor 5s ease-in-out;
+}
