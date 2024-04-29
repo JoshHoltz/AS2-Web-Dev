@@ -408,30 +408,6 @@ function gameOver() {
     }
 }
 
-// LOCAL STORAGE 
-// function topFiveLocalStorage() {
-    // let playerName = prompt('What is your Name? ');
-
-//     let scoreTrack = {
-//         playerName: playerName,
-//         score: pointScoreTrack
-//     };
-
-//     let scoreTrackJSON = JSON.stringify(scoreTrack); //Convert the int (pointScoreTrack) into str as localStorage can only store str's
-//     localStorage.setItem('gameScore', scoreTrackJSON);
-
-//     //RETRIVE STORED DATA
-//     getScores = []
-
-//     for (const storage of localStorage.length) {
-//         let 
-//     }
-
-//     let storedScoreTrack = localStorage.getItem('gameScore');
-//     console.log(storedScoreTrack)
-
-// }
-
 // LOCAL STORAGE
 function topFiveLocalStorage() {
     let leaderboardElement = document.querySelector('.leaderboard ol');
@@ -466,11 +442,32 @@ function topFiveLocalStorage() {
     }
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    updateLeaderboard();
+});
+
+function updateLeaderboard() {
+    let leaderboardElement = document.querySelector('.leaderboard ol');
+
+    let existingScores = JSON.parse(localStorage.getItem('scores')) || [];
+
+    //Top 5 Scores sorting
+    existingScores.sort((a, b) => b[1] - a[1]);
+
+    // Update leaderboard
+    for (let i = 0; i < Math.min(existingScores.length, 5); i++) {
+        let listItem = document.createElement('li');
+        listItem.textContent = `${existingScores[i][0]}........${existingScores[i][1]}`;
+        leaderboardElement.appendChild(listItem);
+        console.log(existingScores[i]);
+    }
+}
+
 
 // RELOAD BROWSER
 function reloadBrowser() {
-    sessionStorage.clear();
     location.reload();
+    sessionStorage.clear();
 }
 
 // UPDATE LIVES
