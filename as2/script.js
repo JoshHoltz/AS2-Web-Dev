@@ -50,7 +50,6 @@ function randomEnemy() {
     else {
         randomEnemy();
     }
-
 }
 
 randomEnemy(); 
@@ -60,6 +59,10 @@ randomEnemy();
 function increaseEnemy() {
     if (enemiesAdded < 10) {
         randomEnemy();
+        enemiesAdded++;
+        console.log("Added an enemy. Total enemies:", enemiesAdded);
+    } else {
+        console.log("Maximum number of enemies reached.");
     }
 }
 
@@ -354,18 +357,17 @@ let nextBtn = nextButton.addEventListener('click', nextLevel)
 function nextLevel() {
     carryOverPoints = levelTracker * maxPoints
     levelTracker++;
-    
     nextButton.style.display = 'flex';
 
     document.removeEventListener('keydown', keyDown);
     document.removeEventListener('keyup', keyUp);
 
-    // nextBtn.addEventListener('click', gameOver)
-
     document.querySelector('.score p').textContent = carryOverPoints;
-    // console.log(levelTracker);
     console.log(carryOverPoints);
     console.log(levelTracker);
+
+    increaseEnemy();
+    randomEnemy();
 }
 
 // RESTART GAME
