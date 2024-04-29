@@ -121,6 +121,7 @@ function keyDown(event) {
 }
 
 //ENEMY MOVEMENT
+let waitTillStartEnemyMove  = false;
 const enemies = document.querySelectorAll('.enemy');
 const wallEdge = document.querySelectorAll('.wall');
 // let enemyTop = 0;
@@ -132,6 +133,8 @@ function randomNumber() {
 let direction = randomNumber();
 
 setInterval(function moveEnemy() {
+    if (!waitTillStartEnemyMove) return;
+
     enemies.forEach(enemy => {
       let enemyPos = enemy.getBoundingClientRect();
       let enemyTop = parseInt(enemy.style.top) || 0; //PARSE INT SO ITS NOT RETURNING A STRING!!!!
@@ -281,6 +284,8 @@ function startGame() {
     document.addEventListener('keydown', keyDown);
     document.addEventListener('keyup', keyUp);
 
+    waitTillStartEnemyMove = true;
+
     // //ARROW KEYS
     // document.querySelector('#ubttn').addEventListener('mousedown', function () {
     //     upPressed = true;
@@ -355,6 +360,8 @@ nextButton.style.display = 'none';
 let nextBtn = nextButton.addEventListener('click', nextLevel)
 
 function nextLevel() {
+    waitTillStartEnemyMove  = false;
+
     carryOverPoints = levelTracker * maxPoints
     levelTracker++;
     nextButton.style.display = 'flex';
@@ -376,6 +383,8 @@ restartButton.style.display = 'none';
 let restartBtn = restartButton.addEventListener('click', reloadBrowser)
 
 function restartGame() {
+    waitTillStartEnemyMove  = false;
+
     restartButton.style.display = 'flex';
     document.removeEventListener('keydown', keyDown);
     document.removeEventListener('keyup', keyUp);
@@ -389,6 +398,7 @@ function restartGame() {
 
 // GAME OVER
 function gameOver() {
+    waitTillStartEnemyMove  = false;
     alert('You Won! Game Over');
 
     let upPressed = false;
@@ -433,7 +443,7 @@ function topFiveLocalStorage() {
     //Top 5 Scores soprting
     existingScores.sort((a, b) => b[1] - a[1]);
 
-    // console.log("All scores from local storage:");
+
     for (let i = 0; i <  Math.min(existingScores.length, 5); i++) {
         let listItem = document.createElement('li');
         listItem.textContent = `${existingScores[i][0]}........${existingScores[i][1]}`;
