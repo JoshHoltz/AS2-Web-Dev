@@ -409,19 +409,47 @@ function gameOver() {
 }
 
 // LOCAL STORAGE 
+// function topFiveLocalStorage() {
+    // let playerName = prompt('What is your Name? ');
+
+//     let scoreTrack = {
+//         playerName: playerName,
+//         score: pointScoreTrack
+//     };
+
+//     let scoreTrackJSON = JSON.stringify(scoreTrack); //Convert the int (pointScoreTrack) into str as localStorage can only store str's
+//     localStorage.setItem('gameScore', scoreTrackJSON);
+
+//     //RETRIVE STORED DATA
+//     getScores = []
+
+//     for (const storage of localStorage.length) {
+//         let 
+//     }
+
+//     let storedScoreTrack = localStorage.getItem('gameScore');
+//     console.log(storedScoreTrack)
+
+// }
+
+// LOCAL STORAGE
 function topFiveLocalStorage() {
     let playerName = prompt('What is your Name? ');
 
-    let scoreTrack = {
-        playerName: playerName,
-        score: pointScoreTrack
-    };
+    let existingScores = JSON.parse(localStorage.getItem('scores')) || [];
+    existingScores.push([playerName, pointScoreTrack]);
 
-    let scoreTrackJSON = JSON.stringify(scoreTrack); //Convert the int (pointScoreTrack) into str as localStorage can only store str's
-    localStorage.setItem('gameScore', scoreTrackJSON);
+    localStorage.setItem('scores', JSON.stringify(existingScores));
 
-    console.log(scoreTrackJSON);
+    //Top 5 Scores soprting
+    existingScores.sort((a, b) => b - a);
+
+    console.log("All scores from local storage:");
+    for (let i = 0; i <  Math.min(existingScores.length, 5); i++) {
+        console.log(existingScores[i]);
+    }
 }
+
 
 // RELOAD BROWSER
 function reloadBrowser() {
