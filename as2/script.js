@@ -434,7 +434,20 @@ function gameOver() {
 
 // LOCAL STORAGE
 function topFiveLocalStorage() {
-    let playerName = prompt('What is your Name? ');
+    let leaderboardElement = document.querySelector('.leaderboard ol');
+    leaderboardElement.innerHTML = ''; 
+
+    let playerName = sessionStorage.getItem('playerName');
+
+    if (!playerName) {
+        playerName = prompt('What is your Name? ');
+
+        if (!playerName) {
+            return; 
+        }
+
+        sessionStorage.setItem('playerName', playerName);
+    }
 
     let existingScores = JSON.parse(localStorage.getItem('scores')) || [];
     existingScores.push([playerName, pointScoreTrack]);
@@ -442,10 +455,13 @@ function topFiveLocalStorage() {
     localStorage.setItem('scores', JSON.stringify(existingScores));
 
     //Top 5 Scores soprting
-    existingScores.sort((a, b) => b - a);
+    existingScores.sort((a, b) => b[1] - a[1]);
 
-    console.log("All scores from local storage:");
+    // console.log("All scores from local storage:");
     for (let i = 0; i <  Math.min(existingScores.length, 5); i++) {
+        let listItem = document.createElement('li');
+        listItem.textContent = `${existingScores[i][0]}........${existingScores[i][1]}`;
+        leaderboardElement.appendChild(listItem);
         console.log(existingScores[i]);
     }
 }
@@ -453,6 +469,7 @@ function topFiveLocalStorage() {
 
 // RELOAD BROWSER
 function reloadBrowser() {
+    sessionStorage.clear();
     location.reload();
 }
 
