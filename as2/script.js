@@ -361,7 +361,14 @@ let nextBtn = nextButton.addEventListener('click', nextLevel)
 
 function nextLevel() {
     waitTillStartEnemyMove  = false;
+    playerTop = 0;
+    playerLeft = 0;
 
+    upPressed = false;
+    downPressed = false;
+    leftPressed = false;
+    rightPressed = false;
+    
     carryOverPoints = levelTracker * maxPoints
     levelTracker++;
     nextButton.style.display = 'flex';
@@ -384,6 +391,13 @@ let restartBtn = restartButton.addEventListener('click', reloadBrowser)
 
 function restartGame() {
     waitTillStartEnemyMove  = false;
+    playerTop = 0;
+    playerLeft = 0;
+
+    upPressed = false;
+    downPressed = false;
+    leftPressed = false;
+    rightPressed = false;
 
     restartButton.style.display = 'flex';
     document.removeEventListener('keydown', keyDown);
@@ -399,12 +413,15 @@ function restartGame() {
 // GAME OVER
 function gameOver() {
     waitTillStartEnemyMove  = false;
-    alert('You Won! Game Over');
+    playerTop = 0;
+    playerLeft = 0;
 
-    let upPressed = false;
-    let downPressed = false;
-    let leftPressed = false;
-    let rightPressed = false;
+    upPressed = false;
+    downPressed = false;
+    leftPressed = false;
+    rightPressed = false;
+
+    alert('You Won! Game Over');
 
     document.removeEventListener('keydown', keyDown);
     document.removeEventListener('keyup', keyUp);
