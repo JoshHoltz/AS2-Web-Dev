@@ -12,11 +12,11 @@ const maze = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 2, 5, 1, 0, 0, 0, 5, 0, 1],
     [1, 0, 5, 0, 5, 5, 0, 1, 5, 1],
-    [1, 0, 5, 0, 0, 0, 5, 5, 5, 1],
+    [1, 0, 5, 5, 0, 0, 5, 5, 5, 1],
     [1, 0, 5, 1, 0, 0, 5, 5, 5, 1],
-    [1, 0, 0, 0, 0, 5, 0, 1, 1, 1],
-    [1, 0, 0, 1, 0, 5, 0, 5, 0, 1],
-    [1, 5, 0, 0, 0, 0, 0, 5, 0, 1],
+    [1, 0, 5, 0, 0, 5, 0, 1, 1, 1],
+    [1, 0, 0, 1, 0, 5, 5, 5, 0, 1],
+    [1, 5, 0, 0, 5, 0, 0, 5, 0, 1],
     [1, 0, 5, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
@@ -382,6 +382,55 @@ function nextLevel() {
 
     increaseEnemy();
     randomEnemy();
+    removeMaze();
+}
+
+function removeMaze() {
+    document.querySelector('main').innerHTML = '';
+
+    randomNextLevel();
+}
+
+function randomNextLevel() {
+    for (let y of maze) {
+        for (let x of y) {
+            let block = document.createElement('div');
+            block.classList.add('block');
+    
+            switch (x) {
+                case 1:
+                    let wallCount = document.querySelectorAll('.wall')
+                    if (wallCount.length >= 55) {
+                        break;
+                    } {
+                        block.classList.add('wall');
+                    }
+                    break;
+                case 2:
+                    block.id = 'player';
+                    let mouth = document.createElement('div');
+                    mouth.classList.add('mouth');
+                    block.appendChild(mouth);
+                    break;
+                case 3:
+                    let enemeyCount = document.querySelectorAll('.enemy')
+                    if (enemeyCount.length >= 5) {
+                        break;
+                    } {
+                        block.classList.add('enemy');
+                    }
+                    break;
+                default:
+                    block.classList.add('point');
+                    block.style.height = '1vh';
+                    block.style.width = '1vh';
+            }
+    
+            main.appendChild(block);
+        }
+    }
+
+    randomMaze();
 }
 
 // RESTART GAME
@@ -556,6 +605,14 @@ function enemyCheck() {
             if (playerInvincibility == false) { //if not invincible add the 'hit' css class
                 player.classList.add('hit');
                 playerInvincibility = true; //player invinciblity = true now 
+                
+                document.removeEventListener('keydown', keyDown);
+                document.removeEventListener('keyup', keyUp);            
+
+                upPressed = false; 
+                downPressed = false;
+                leftPressed = false;
+                rightPressed = false;
             }
 
             setTimeout(() => {
