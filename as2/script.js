@@ -11,11 +11,11 @@ const main = document.querySelector('main');
 const maze = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 2, 5, 1, 0, 0, 0, 5, 0, 1],
-    [1, 0, 5, 0, 5, 5, 0, 1, 5, 1],
+    [1, 0, 5, 0, 5, 5, 5, 1, 5, 1],
     [1, 0, 5, 5, 0, 0, 5, 5, 5, 1],
     [1, 0, 5, 1, 0, 0, 5, 5, 5, 1],
     [1, 0, 5, 0, 0, 5, 0, 1, 1, 1],
-    [1, 0, 0, 1, 0, 5, 5, 5, 0, 1],
+    [1, 0, 5, 1, 0, 5, 5, 5, 0, 1],
     [1, 5, 0, 0, 5, 0, 0, 5, 0, 1],
     [1, 0, 5, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
@@ -122,7 +122,7 @@ function keyDown(event) {
 
 //ENEMY MOVEMENT
 let waitTillStartEnemyMove  = false;
-const enemies = document.querySelectorAll('.enemy');
+let enemies = document.querySelectorAll('.enemy');
 const wallEdge = document.querySelectorAll('.wall');
 // let enemyTop = 0;
 // let enemyLeft = 0;
@@ -134,6 +134,7 @@ let direction = randomNumber();
 
 setInterval(function moveEnemy() {
     if (!waitTillStartEnemyMove) return;
+    enemies = document.querySelectorAll('.enemy');
 
     enemies.forEach(enemy => {
       let enemyPos = enemy.getBoundingClientRect();
@@ -194,7 +195,7 @@ setInterval(function moveEnemy() {
   }, 10);
 
 
-const player = document.querySelector('#player');
+let player = document.querySelector('#player');
 const playerMouth = player.querySelector('.mouth');
 let playerTop = 0;
 let playerLeft = 0;
@@ -202,7 +203,9 @@ let playerLeft = 0;
 
 // Collision Detection
 function playerSpeed(speed) {
+
     return setInterval(function () {
+        player = document.querySelector('#player');
         if (downPressed == true) {
             let position = player.getBoundingClientRect() /*Get the Current location and store it in position*/
             let newBottom = position.bottom + 1; /*to work out the location below we will + 1*/
@@ -392,6 +395,8 @@ function removeMaze() {
 }
 
 function randomNextLevel() {
+    nextButton.style.display = 'none';
+
     for (let y of maze) {
         for (let x of y) {
             let block = document.createElement('div');
@@ -400,7 +405,7 @@ function randomNextLevel() {
             switch (x) {
                 case 1:
                     let wallCount = document.querySelectorAll('.wall')
-                    if (wallCount.length >= 55) {
+                    if (wallCount.length >= 56) {
                         break;
                     } {
                         block.classList.add('wall');
@@ -431,6 +436,8 @@ function randomNextLevel() {
     }
 
     randomMaze();
+    startGame();
+    moveEnemy();
 }
 
 // RESTART GAME
@@ -606,13 +613,13 @@ function enemyCheck() {
                 player.classList.add('hit');
                 playerInvincibility = true; //player invinciblity = true now 
                 
-                document.removeEventListener('keydown', keyDown);
-                document.removeEventListener('keyup', keyUp);            
+                // document.removeEventListener('keydown', keyDown);
+                // document.removeEventListener('keyup', keyUp);            
 
-                upPressed = false; 
-                downPressed = false;
-                leftPressed = false;
-                rightPressed = false;
+                // upPressed = false; 
+                // downPressed = false;
+                // leftPressed = false;
+                // rightPressed = false;
             }
 
             setTimeout(() => {
