@@ -671,6 +671,7 @@ function pointCheck() {
             if (pointScoreTrack === maxPoints) { //if the points were to == to the .length of the total points
                 // gameOver(); //run the game over function
                 nextLevel();
+                randomNextLevel();
             }
             // if (pointScoreTrack / 2 && !powerUpActive) {
             //     powerUp();
