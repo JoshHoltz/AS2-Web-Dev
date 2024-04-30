@@ -396,7 +396,8 @@ function removeMaze() {
 
 function randomNextLevel() {
     nextButton.style.display = 'none';
-
+    maxPoints = document.querySelectorAll('.point').length; //get the maximum points achiveable in the maze by selecting All '.point'.length and store it in maxPoints
+    playerInvincibility = true;
     for (let y of maze) {
         for (let x of y) {
             let block = document.createElement('div');
@@ -650,7 +651,7 @@ function enemyCheck() {
 
 // Points Detection
 let pointScoreTrack = 0; //let start of game score = 0 always;
-const maxPoints = document.querySelectorAll('.point').length; //get the maximum points achiveable in the maze by selecting All '.point'.length and store it in maxPoints
+let maxPoints = document.querySelectorAll('.point').length; //get the maximum points achiveable in the maze by selecting All '.point'.length and store it in maxPoints
 function pointCheck() {
     const position = player.getBoundingClientRect(); //get player position
     const points = document.querySelectorAll('.point'); //select all with class with points
@@ -668,8 +669,8 @@ function pointCheck() {
 
 
             if (pointScoreTrack === maxPoints) { //if the points were to == to the .length of the total points
-                gameOver(); //run the game over function
-                // nextLevel();
+                // gameOver(); //run the game over function
+                nextLevel();
             }
             // if (pointScoreTrack / 2 && !powerUpActive) {
             //     powerUp();
