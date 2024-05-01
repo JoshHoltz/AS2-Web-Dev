@@ -436,10 +436,11 @@ function randomNextLevel() {
             main.appendChild(block);
         }
     }
-
-    let pointScoreTrack = 0; 
+    
+    maxPoints = document.querySelectorAll('.point').length;
     if (pointScoreTrack == maxPoints) {
         randomMaze();
+        console.log('max points reached') //NOT TRACKER POINTS
     }
 
     // randomMaze();
@@ -671,6 +672,7 @@ function pointCheck() {
             position.top < pos.bottom
         ) {
             points[i].classList.remove('point');
+            console.log('points Got')
             pointScoreTrack++;
             document.querySelector('.score p').textContent = pointScoreTrack;
 
