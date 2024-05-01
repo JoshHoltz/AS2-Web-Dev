@@ -7,16 +7,17 @@ let lives = 2;
 
 const main = document.querySelector('main');
 
+// ======================================================================================================
 //Player = 2, Wall = 1, Enemy = 3, Point = 0, solveablePath = 5
 const maze = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 2, 5, 1, 0, 0, 0, 5, 0, 1],
-    [1, 0, 5, 0, 5, 5, 5, 1, 5, 1],
+    [1, 0, 5, 0, 5, 5, 5, 5, 5, 1],
     [1, 0, 5, 5, 0, 0, 5, 5, 5, 1],
     [1, 0, 5, 1, 0, 0, 5, 5, 5, 1],
     [1, 0, 5, 0, 0, 5, 0, 1, 1, 1],
     [1, 0, 5, 1, 0, 5, 5, 5, 0, 1],
-    [1, 5, 0, 0, 5, 0, 0, 5, 0, 1],
+    [1, 5, 0, 0, 5, 0, 5, 5, 0, 1],
     [1, 0, 5, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
@@ -52,9 +53,9 @@ function randomEnemy() {
     }
 }
 
-randomEnemy(); 
-randomEnemy(); 
-randomEnemy(); 
+randomEnemy();
+randomEnemy();
+randomEnemy();
 
 function increaseEnemy() {
     if (enemiesAdded < 10) {
@@ -95,6 +96,7 @@ for (let y of maze) {
     }
 }
 
+// ======================================================================================================
 //Player movement
 function keyUp(event) {
     if (event.key === 'ArrowUp') {
@@ -121,7 +123,7 @@ function keyDown(event) {
 }
 
 //ENEMY MOVEMENT
-let waitTillStartEnemyMove  = false;
+let waitTillStartEnemyMove = false;
 let enemies = document.querySelectorAll('.enemy');
 const wallEdge = document.querySelectorAll('.wall');
 // let enemyTop = 0;
@@ -137,62 +139,62 @@ setInterval(function moveEnemy() {
     enemies = document.querySelectorAll('.enemy');
 
     enemies.forEach(enemy => {
-      let enemyPos = enemy.getBoundingClientRect();
-      let enemyTop = parseInt(enemy.style.top) || 0; //PARSE INT SO ITS NOT RETURNING A STRING!!!!
-      let enemyLeft = parseInt(enemy.style.left) || 0;
-      let direction = enemy.direction || randomNumber();
-    
-      switch (direction) {
-        case 1: // MPVE DOWN
-          newBottom = enemyPos.bottom + 1;
-          btmL = document.elementFromPoint(enemyPos.left, newBottom);
-          btmR = document.elementFromPoint(enemyPos.right, newBottom);
-          if (btmL.classList.contains('wall') == false && btmR.classList.contains('wall') == false) {
-            enemyTop++;
-          } else {
-            direction = randomNumber();
-          }
-          break;
-  
-        case 2: // MOVE UP
-          newTop = enemyPos.top - 1;
-          topL = document.elementFromPoint(enemyPos.left, newTop);
-          topR = document.elementFromPoint(enemyPos.right, newTop);
-          if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) {
-            enemyTop--;
-          } else {
-            direction = randomNumber();
-          }
-          break;
-  
-        case 3: //LEFT
-          newLeft = enemyPos.left - 1;
-          leftTop = document.elementFromPoint(newLeft, enemyPos.top);
-          leftBottom = document.elementFromPoint(newLeft, enemyPos.bottom);
-          if (leftTop.classList.contains('wall') == false && leftBottom.classList.contains('wall') == false) {
-            enemyLeft--;
-          } else {
-            direction = randomNumber();
-          }
-          break;
-  
-        case 4: //RIGHT
-          newRight = enemyPos.right + 1;
-          rightTop = document.elementFromPoint(newRight, enemyPos.top);
-          rightBottom = document.elementFromPoint(newRight, enemyPos.bottom);
-          if (rightTop.classList.contains('wall') == false && rightBottom.classList.contains('wall') == false) {
-            enemyLeft++;
-          } else {
-            direction = randomNumber();
-          }
-          break;
-      }
-  
-      enemy.style.top = enemyTop + 'px';
-      enemy.style.left = enemyLeft + 'px';
-      enemy.direction = direction;
+        let enemyPos = enemy.getBoundingClientRect();
+        let enemyTop = parseInt(enemy.style.top) || 0; //PARSE INT SO ITS NOT RETURNING A STRING!!!!
+        let enemyLeft = parseInt(enemy.style.left) || 0;
+        let direction = enemy.direction || randomNumber();
+
+        switch (direction) {
+            case 1: // MPVE DOWN
+                newBottom = enemyPos.bottom + 1;
+                btmL = document.elementFromPoint(enemyPos.left, newBottom);
+                btmR = document.elementFromPoint(enemyPos.right, newBottom);
+                if (btmL.classList.contains('wall') == false && btmR.classList.contains('wall') == false) {
+                    enemyTop++;
+                } else {
+                    direction = randomNumber();
+                }
+                break;
+
+            case 2: // MOVE UP
+                newTop = enemyPos.top - 1;
+                topL = document.elementFromPoint(enemyPos.left, newTop);
+                topR = document.elementFromPoint(enemyPos.right, newTop);
+                if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) {
+                    enemyTop--;
+                } else {
+                    direction = randomNumber();
+                }
+                break;
+
+            case 3: //LEFT
+                newLeft = enemyPos.left - 1;
+                leftTop = document.elementFromPoint(newLeft, enemyPos.top);
+                leftBottom = document.elementFromPoint(newLeft, enemyPos.bottom);
+                if (leftTop.classList.contains('wall') == false && leftBottom.classList.contains('wall') == false) {
+                    enemyLeft--;
+                } else {
+                    direction = randomNumber();
+                }
+                break;
+
+            case 4: //RIGHT
+                newRight = enemyPos.right + 1;
+                rightTop = document.elementFromPoint(newRight, enemyPos.top);
+                rightBottom = document.elementFromPoint(newRight, enemyPos.bottom);
+                if (rightTop.classList.contains('wall') == false && rightBottom.classList.contains('wall') == false) {
+                    enemyLeft++;
+                } else {
+                    direction = randomNumber();
+                }
+                break;
+        }
+
+        enemy.style.top = enemyTop + 'px';
+        enemy.style.left = enemyLeft + 'px';
+        enemy.direction = direction;
     });
-  }, 10);
+}, 10);
 
 
 let player = document.querySelector('#player');
@@ -200,6 +202,7 @@ const playerMouth = player.querySelector('.mouth');
 let playerTop = 0;
 let playerLeft = 0;
 
+// ======================================================================================================
 
 // Collision Detection
 function playerSpeed(speed) {
@@ -264,19 +267,13 @@ function playerSpeed(speed) {
         }
 
         enemyCheck();
-
         pointCheck();
-
-        // moveEnemy();
-
-        // randomEnemy();
-
-
     }, speed);
 };
 
 playerSpeed(10);
 
+// ======================================================================================================
 // START, NEXT, AND, RESTART BUTTONS //
 
 // START BUTTON 
@@ -355,15 +352,12 @@ function startGame() {
 startButton.addEventListener('click', startGame)
 
 // NEXT LEVEL
-levelTracker = 0
-hiddenScore = 0
 const nextButton = document.querySelector('.next');
 nextButton.style.display = 'none';
-// let nextBtn = nextButton.addEventListener('click', reloadBrowser)
 let nextBtn = nextButton.addEventListener('click', nextLevel)
 
 function nextLevel() {
-    waitTillStartEnemyMove  = false;
+    waitTillStartEnemyMove = false;
     playerTop = 0;
     playerLeft = 0;
 
@@ -371,39 +365,41 @@ function nextLevel() {
     downPressed = false;
     leftPressed = false;
     rightPressed = false;
-    
-    carryOverPoints = levelTracker * maxPoints
-    levelTracker++;
+
     nextButton.style.display = 'flex';
 
     document.removeEventListener('keydown', keyDown);
     document.removeEventListener('keyup', keyUp);
 
-    document.querySelector('.score p').textContent = carryOverPoints;
-    console.log(carryOverPoints);
-    console.log(levelTracker);
+    document.querySelector('.score p').textContent = pointScoreTrack;
 
     increaseEnemy();
     randomEnemy();
     removeMaze();
-    // moveEnemy();
+    LevelMaxPoints();
 }
 
+// ======================================================================================================
 function removeMaze() {
     document.querySelector('main').innerHTML = '';
 
     randomNextLevel();
 }
 
+let NewLevelMaxPoints = document.querySelectorAll('.point').length;
+function LevelMaxPoints() {
+    LevelMaxPoints = document.querySelectorAll('.point').length;
+}
+
+
 function randomNextLevel() {
     nextButton.style.display = 'none';
-    maxPoints = document.querySelectorAll('.point').length; //get the maximum points achiveable in the maze by selecting All '.point'.length and store it in maxPoints
     playerInvincibility = true;
     for (let y of maze) {
         for (let x of y) {
             let block = document.createElement('div');
             block.classList.add('block');
-    
+
             switch (x) {
                 case 1:
                     let wallCount = document.querySelectorAll('.wall')
@@ -432,22 +428,19 @@ function randomNextLevel() {
                     block.style.height = '1vh';
                     block.style.width = '1vh';
             }
-    
+
             main.appendChild(block);
         }
     }
-    
-    maxPoints = document.querySelectorAll('.point').length;
-    if (pointScoreTrack == maxPoints) {
-        randomMaze();
-        console.log('max points reached') //NOT TRACKER POINTS
-    }
 
-    // randomMaze();
+    LevelMaxPoints();
+
+    randomMaze();
     startGame();
     moveEnemy();
     pointCheck();
 }
+
 
 
 // RESTART GAME
@@ -456,7 +449,7 @@ restartButton.style.display = 'none';
 let restartBtn = restartButton.addEventListener('click', reloadBrowser)
 
 function restartGame() {
-    waitTillStartEnemyMove  = false;
+    waitTillStartEnemyMove = false;
     playerTop = 0;
     playerLeft = 0;
 
@@ -478,7 +471,7 @@ function restartGame() {
 
 // GAME OVER
 function gameOver() {
-    waitTillStartEnemyMove  = false;
+    waitTillStartEnemyMove = false;
     playerTop = 0;
     playerLeft = 0;
 
@@ -501,8 +494,9 @@ function gameOver() {
     }
 }
 
+// ======================================================================================================
 // LOCAL STORAGE
-function updateLeaderboard() { 
+function updateLeaderboard() {
     let leaderboardElement = document.querySelector('.leaderboard ol');
 
     let existingScores = JSON.parse(localStorage.getItem('scores')) || [];
@@ -517,7 +511,7 @@ function updateLeaderboard() {
     });
 }
 
-// Function to update localStorage with the top five scores
+// TOP 5 SCORES
 function topFiveLocalStorage() {
     let playerName = sessionStorage.getItem('playerName');
 
@@ -562,6 +556,7 @@ function reloadBrowser() {
     sessionStorage.clear();
 }
 
+// ======================================================================================================
 // UPDATE LIVES
 function updateLives() {
     let totalLives = document.querySelectorAll('.lives li'); //select the css class for the lives 
@@ -574,6 +569,7 @@ function updateLives() {
     }
 }
 
+// ======================================================================================================
 // Change Player Colour
 const colours = document.querySelectorAll('.colours li');
 const closeside = document.getElementById('closeside');
@@ -600,6 +596,7 @@ function closeColourPicker() {
     }
 }
 
+// ======================================================================================================
 // ENEMY DETECTION
 let playerInvincibility = false;
 
@@ -621,7 +618,7 @@ function enemyCheck() {
             if (playerInvincibility == false) { //if not invincible add the 'hit' css class
                 player.classList.add('hit');
                 playerInvincibility = true; //player invinciblity = true now 
-                
+
                 // document.removeEventListener('keydown', keyDown);
                 // document.removeEventListener('keyup', keyUp);            
 
@@ -653,13 +650,15 @@ function enemyCheck() {
 //     playerInvincibility = true;
 
 //     setTimeout(() => {
-        
+
 //     }, 5000);
 // }
 
+// ======================================================================================================
 // Points Detection
 let pointScoreTrack = 0; //let start of game score = 0 always;
 let maxPoints = document.querySelectorAll('.point').length; //get the maximum points achiveable in the maze by selecting All '.point'.length and store it in maxPoints
+let hiddenPoints = 0;
 function pointCheck() {
     const position = player.getBoundingClientRect(); //get player position
     let points = document.querySelectorAll('.point'); //select all with class with points
@@ -674,15 +673,23 @@ function pointCheck() {
             points[i].classList.remove('point');
             console.log('points Got')
             pointScoreTrack++;
+            hiddenPoints++;
+            console.log(hiddenPoints)
             document.querySelector('.score p').textContent = pointScoreTrack;
 
-
             if (pointScoreTrack === maxPoints) { //if the points were to == to the .length of the total points
-                // gameOver(); //run the game over function
+                gameOver(); //run the game over function
                 nextLevel();
-                // randomNextLevel();
+                randomNextLevel();
             }
-            // if (pointScoreTrack / 2 && !powerUpActive) {
+
+            if (hiddenPoints === NewLevelMaxPoints) {
+                nextLevel();
+                console.log('condition met for new level');
+                hiddenPoints = 0;
+
+            }
+            //  if (pointScoreTrack / 2 && !powerUpActive) {
             //     powerUp();
             // } else {
             //     playerSpeed(10);
@@ -690,6 +697,7 @@ function pointCheck() {
         }
     }
 }
+
 
 function createLife() {
     const li = document.createElement('li');
