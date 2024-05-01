@@ -518,8 +518,8 @@ function topFiveLocalStorage() {
         sessionStorage.setItem('playerName', playerName);
     }
 
-    let existingScores = JSON.parse(localStorage.getItem('scores')) || [];
-    existingScores.push([playerName, pointScoreTrack]);
+    // let existingScores = JSON.parse(localStorage.getItem('scores')) || [];
+    // existingScores.push([playerName, pointScoreTrack]);
 
     // for (let i = 0; i < localStorage.length; i++) {
     //     let key = localStorage.key(i);
