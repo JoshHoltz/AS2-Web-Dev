@@ -521,6 +521,13 @@ function topFiveLocalStorage() {
     let existingScores = JSON.parse(localStorage.getItem('scores')) || [];
     existingScores.push([playerName, pointScoreTrack]);
 
+    // for (let i = 0; i < localStorage.length; i++) {
+    //     let key = localStorage.key(i);
+    //     let value = localStorage.getItem(key);
+    //     items.push(value);
+    // }
+    // console.log(items);
+
     localStorage.setItem('scores', JSON.stringify(existingScores));
 
     //Top 5 Scores soprting
@@ -528,11 +535,10 @@ function topFiveLocalStorage() {
     existingScores = existingScores.slice(0, 5);
 
     // PUSING SCORE
-    if (pointScoreTrack > existingScores[existingScores.length - 1][1] && !existingScores == existingScores) {
+    if (pointScoreTrack > existingScores[existingScores.length - 1][1]) { //&& !playerName.includes(playerName >= 1)) { //TRYING TO MAKE IT SO IF PLAYER NAME IS ALREADY IN TABLE DO NOT REPUT IT THERE
         existingScores.push([playerName, pointScoreTrack]);
     } 
 };
-
 
 document.addEventListener('DOMContentLoaded', function () {
     updateLeaderboard();
@@ -542,18 +548,18 @@ function updateLeaderboard() {
     let leaderboardElement = document.querySelector('.leaderboard ol');
 
     let existingScores = JSON.parse(localStorage.getItem('scores')) || [];
-
-    //Top 5 Scores sorting
     existingScores.sort((a, b) => b[1] - a[1]);
 
     // Update leaderboard
     for (let i = 0; i < Math.min(existingScores.length, 5); i++) {
-        let listItem = document.createElement('li');
-        listItem.textContent = `${existingScores[i][0]}........${existingScores[i][1]}`;
-        leaderboardElement.appendChild(listItem);
-        console.log(existingScores[i]);
-    }
-}
+        // if (pointScoreTrack > existingScores[existingScores.length - 1][1] && !playerName.includes(playerName >= 1)) {
+            let listItem = document.createElement('li');
+            listItem.textContent = `${existingScores[i][0]}........${existingScores[i][1]}`;
+            leaderboardElement.appendChild(listItem);
+            console.log(existingScores[i]);
+        }
+    };
+// };
 
 
 // RELOAD BROWSER
