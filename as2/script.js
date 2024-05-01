@@ -502,10 +502,23 @@ function gameOver() {
 }
 
 // LOCAL STORAGE
-function topFiveLocalStorage() {
+function updateLeaderboard() { 
     let leaderboardElement = document.querySelector('.leaderboard ol');
-    leaderboardElement.innerHTML = '';
 
+    let existingScores = JSON.parse(localStorage.getItem('scores')) || [];
+    existingScores.sort((a, b) => b[1] - a[1]);
+
+    leaderboardElement.innerHTML = ''; //CLEAR ALL HTML INNER CONTENT
+    existingScores.forEach(score => {
+        let [playerName, playerScore] = score;
+        let listItem = document.createElement('li');
+        listItem.textContent = `${playerName}........${playerScore}`;
+        leaderboardElement.appendChild(listItem);
+    });
+}
+
+// Function to update localStorage with the top five scores
+function topFiveLocalStorage() {
     let playerName = sessionStorage.getItem('playerName');
 
     if (!playerName) {
@@ -518,48 +531,29 @@ function topFiveLocalStorage() {
         sessionStorage.setItem('playerName', playerName);
     }
 
-    // let existingScores = JSON.parse(localStorage.getItem('scores')) || [];
-    // existingScores.push([playerName, pointScoreTrack]);
+    let existingScores = JSON.parse(localStorage.getItem('scores')) || [];
 
-    // for (let i = 0; i < localStorage.length; i++) {
-    //     let key = localStorage.key(i);
-    //     let value = localStorage.getItem(key);
-    //     items.push(value);
-    // }
-    // console.log(items);
+    let playerIndex = existingScores.findIndex(score => score[0] === playerName); //IS PLAYER ALREADY IN THE ARRAY
 
-    localStorage.setItem('scores', JSON.stringify(existingScores));
+    if (playerIndex !== -1) {
+        if (pointScoreTrack > existingScores[playerIndex][1]) { //IF PPLAYER IS IN LEADERBOARD
+            existingScores[playerIndex][1] = pointScoreTrack; // UPDATE THERE SCORE
+        }
+    } else {
+        existingScores.push([playerName, pointScoreTrack]); //IF NOT IN LEADERBOARD PUSH THEM TO IT
+    }
 
-    //Top 5 Scores soprting
+    // HIGH TO LOW SCORE AND DISPLAY TOP 5
     existingScores.sort((a, b) => b[1] - a[1]);
     existingScores = existingScores.slice(0, 5);
+    localStorage.setItem('scores', JSON.stringify(existingScores)); //SET THE STRING TO BE AN INT ON EXISITINGSCORE
 
-    // PUSING SCORE
-    if (pointScoreTrack > existingScores[existingScores.length - 1][1]) { //&& !playerName.includes(playerName >= 1)) { //TRYING TO MAKE IT SO IF PLAYER NAME IS ALREADY IN TABLE DO NOT REPUT IT THERE
-        existingScores.push([playerName, pointScoreTrack]);
-    } 
-};
+    updateLeaderboard();
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     updateLeaderboard();
 });
-
-function updateLeaderboard() {
-    let leaderboardElement = document.querySelector('.leaderboard ol');
-
-    let existingScores = JSON.parse(localStorage.getItem('scores')) || [];
-    existingScores.sort((a, b) => b[1] - a[1]);
-
-    // Update leaderboard
-    for (let i = 0; i < Math.min(existingScores.length, 5); i++) {
-        // if (pointScoreTrack > existingScores[existingScores.length - 1][1] && !playerName.includes(playerName >= 1)) {
-            let listItem = document.createElement('li');
-            listItem.textContent = `${existingScores[i][0]}........${existingScores[i][1]}`;
-            leaderboardElement.appendChild(listItem);
-            console.log(existingScores[i]);
-        }
-    };
-// };
 
 
 // RELOAD BROWSER
