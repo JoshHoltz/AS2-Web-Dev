@@ -386,6 +386,7 @@ function nextLevel() {
     increaseEnemy();
     randomEnemy();
     removeMaze();
+    // moveEnemy();
 }
 
 function removeMaze() {
@@ -436,10 +437,17 @@ function randomNextLevel() {
         }
     }
 
-    randomMaze();
+    let pointScoreTrack = 0; 
+    if (pointScoreTrack == maxPoints) {
+        randomMaze();
+    }
+
+    // randomMaze();
     startGame();
     moveEnemy();
+    pointCheck();
 }
+
 
 // RESTART GAME
 const restartButton = document.querySelector('.restart');
@@ -495,7 +503,7 @@ function gameOver() {
 // LOCAL STORAGE
 function topFiveLocalStorage() {
     let leaderboardElement = document.querySelector('.leaderboard ol');
-    leaderboardElement.innerHTML = ''; 
+    leaderboardElement.innerHTML = '';
 
     let playerName = sessionStorage.getItem('playerName');
 
@@ -503,7 +511,7 @@ function topFiveLocalStorage() {
         playerName = prompt('What is your Name? ');
 
         if (!playerName) {
-            return; 
+            return;
         }
 
         sessionStorage.setItem('playerName', playerName);
@@ -516,15 +524,14 @@ function topFiveLocalStorage() {
 
     //Top 5 Scores soprting
     existingScores.sort((a, b) => b[1] - a[1]);
+    existingScores = existingScores.slice(0, 5);
 
+    // PUSING SCORE
+    if (pointScoreTrack > existingScores[existingScores.length - 1][1] && !existingScores == existingScores) {
+        existingScores.push([playerName, pointScoreTrack]);
+    } 
+};
 
-    for (let i = 0; i <  Math.min(existingScores.length, 5); i++) {
-        let listItem = document.createElement('li');
-        listItem.textContent = `${existingScores[i][0]}........${existingScores[i][1]}`;
-        leaderboardElement.appendChild(listItem);
-        console.log(existingScores[i]);
-    }
-}
 
 document.addEventListener('DOMContentLoaded', function () {
     updateLeaderboard();
@@ -654,7 +661,7 @@ let pointScoreTrack = 0; //let start of game score = 0 always;
 let maxPoints = document.querySelectorAll('.point').length; //get the maximum points achiveable in the maze by selecting All '.point'.length and store it in maxPoints
 function pointCheck() {
     const position = player.getBoundingClientRect(); //get player position
-    const points = document.querySelectorAll('.point'); //select all with class with points
+    let points = document.querySelectorAll('.point'); //select all with class with points
 
     for (let i = 0; i < points.length; i++) {
         let pos = points[i].getBoundingClientRect();
@@ -671,7 +678,7 @@ function pointCheck() {
             if (pointScoreTrack === maxPoints) { //if the points were to == to the .length of the total points
                 // gameOver(); //run the game over function
                 nextLevel();
-                randomNextLevel();
+                // randomNextLevel();
             }
             // if (pointScoreTrack / 2 && !powerUpActive) {
             //     powerUp();
@@ -696,3 +703,5 @@ function removeLife() {
     const li = document.querySelector('.lives ul li');
     li.parentNode.removeChild(li);
 };
+
+// playerInvincibility = true;
