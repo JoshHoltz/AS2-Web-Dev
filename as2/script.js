@@ -268,6 +268,7 @@ function playerSpeed(speed) {
 
         enemyCheck();
         pointCheck();
+        jumpSideToSide();
     }, speed);
 };
 
@@ -681,6 +682,8 @@ function pointCheck() {
                 gameOver(); //run the game over function
                 nextLevel();
                 randomNextLevel();
+
+                hiddenPoints = 0;
             }
 
             if (hiddenPoints === NewLevelMaxPoints) {
@@ -713,5 +716,42 @@ function removeLife() {
     const li = document.querySelector('.lives ul li');
     li.parentNode.removeChild(li);
 };
+
+// function jumpSideToSide() {
+//     const player = document.getElementById('player');
+//     const playerPos = player.getBoundingClientRect();
+
+//     // Define the range around the target area
+//     const xRange = { min: 290, max: 300 }; // Adjust these values as needed
+//     const yRange = { min: 440, max: 455 }; // Adjust these values as needed
+
+//     // Check if the player is within the target area
+//     if (
+//         playerPos.x >= xRange.min && playerPos.x <= xRange.max &&
+//         playerPos.y >= yRange.min && playerPos.y <= yRange.max
+//     ) {
+//         // Move the player to the new position
+//         player.style.left = "934.3125px";
+//         player.style.top = "453.171875px";
+//         console.log('hit');
+//     }
+// }
+
+// function jumpSideToSide() {
+//     const player = document.getElementById('player');
+//     const playerPos = player.getBoundingClientRect();
+
+//     const xRange = { min: 290, max: 315 }; 
+//     const yRange = { min: 440, max: 460 }; 
+
+//     if (
+//         playerPos.x >= xRange.min && playerPos.x <= xRange.max &&
+//         playerPos.y >= yRange.min && playerPos.y <= yRange.max
+//     ) {
+//         player.style.left = "934.3125px";
+//         player.style.top = "453.171875px";
+//         console.log('hit');
+//     }
+// }
 
 // playerInvincibility = true;
