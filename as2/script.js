@@ -57,15 +57,19 @@ randomEnemy();
 randomEnemy();
 randomEnemy();
 
-function increaseEnemy() {
-    if (enemiesAdded < 10) {
-        randomEnemy();
-        enemiesAdded++;
-        console.log("Added an enemy. Total enemies:", enemiesAdded);
-    } else {
-        console.log("Maximum number of enemies reached.");
+function randomPowerUpPosition() {
+    let row = Math.floor(Math.random() * maze.length);
+    let column = Math.floor(Math.random() * maze[row].length);
+
+    if (maze[row][column] == 0) {
+        maze[row][column] = 4;
+    }
+    else {
+        randomPowerUpPosition();
     }
 }
+
+randomPowerUpPosition();
 
 //Populates the maze in the HTML
 for (let y of maze) {
@@ -86,6 +90,8 @@ for (let y of maze) {
             case 3:
                 block.classList.add('enemy');
                 break;
+            case 4:
+                block.classList.add('powerUpImage')
             default:
                 block.classList.add('point');
                 block.style.height = '1vh';
@@ -143,44 +149,97 @@ setInterval(function moveEnemy() {
         let direction = enemy.direction || randomNumber();
 
         switch (direction) {
-            case 1: // MPVE DOWN
+            case 1: // MOVE DOWN
                 newBottom = enemyPos.bottom + 1;
                 btmL = document.elementFromPoint(enemyPos.left, newBottom);
                 btmR = document.elementFromPoint(enemyPos.right, newBottom);
-                if (btmL.classList.contains('wall') == false && btmR.classList.contains('wall') == false) {
+
+                let hitEnemyBottom = false;
+                for (const surrondingEnemy of enemies) {
+                    if (surrondingEnemy !== enemy) {
+                        let surrodningEnemyPos = surrondingEnemy.getBoundingClientRect();
+                        if (enemyPos.left < surrodningEnemyPos.right &&
+                            enemyPos.right > surrodningEnemyPos.left &&
+                            newBottom < surrodningEnemyPos.top &&
+                            enemyPos.top < surrodningEnemyPos.bottom) {
+                            hitEnemyBottom = true;
+                        }
+                    }
+                };
+
+                if (!hitEnemyBottom && btmL.classList.contains('wall') == false && btmR.classList.contains('wall') == false) {
                     enemyTop++;
                 } else {
                     direction = randomNumber();
                 }
                 break;
 
-            case 2: // MOVE UP
+                case 2: // MOVE UP
                 newTop = enemyPos.top - 1;
                 topL = document.elementFromPoint(enemyPos.left, newTop);
                 topR = document.elementFromPoint(enemyPos.right, newTop);
-                if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) {
+
+                let hitEnemyTop = false;
+                for (const surrondingEnemy of enemies) {
+                    if (surrondingEnemy !== enemy) {
+                        let surrodningEnemyPos = surrondingEnemy.getBoundingClientRect();
+                        if (enemyPos.left < surrodningEnemyPos.right &&
+                            enemyPos.right > surrodningEnemyPos.left &&
+                            newTop < surrodningEnemyPos.bottom &&
+                            enemyPos.bottom > surrodningEnemyPos.top) {
+                            hitEnemyTop = true;
+                        }
+                    }
+                };
+                if (!hitEnemyTop && topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) {
                     enemyTop--;
                 } else {
                     direction = randomNumber();
                 }
                 break;
 
-            case 3: //LEFT
+                case 3: // MOVE LEFT
                 newLeft = enemyPos.left - 1;
                 leftTop = document.elementFromPoint(newLeft, enemyPos.top);
                 leftBottom = document.elementFromPoint(newLeft, enemyPos.bottom);
-                if (leftTop.classList.contains('wall') == false && leftBottom.classList.contains('wall') == false) {
+
+                let hitEnemyLeft = false;
+                for (const surrondingEnemy of enemies) {
+                    if (surrondingEnemy !== enemy) {
+                        let surrodningEnemyPos = surrondingEnemy.getBoundingClientRect();
+                        if (enemyPos.top < surrodningEnemyPos.bottom &&
+                            enemyPos.bottom > surrodningEnemyPos.top &&
+                            newLeft < surrodningEnemyPos.right &&
+                            enemyPos.right > surrodningEnemyPos.left) {
+                            hitEnemyLeft = true;
+                        }
+                    }
+                };
+                if (!hitEnemyLeft && leftTop.classList.contains('wall') == false && leftBottom.classList.contains('wall') == false) {
                     enemyLeft--;
                 } else {
                     direction = randomNumber();
                 }
                 break;
 
-            case 4: //RIGHT
+                case 4: // MOVE RIGHT
                 newRight = enemyPos.right + 1;
                 rightTop = document.elementFromPoint(newRight, enemyPos.top);
                 rightBottom = document.elementFromPoint(newRight, enemyPos.bottom);
-                if (rightTop.classList.contains('wall') == false && rightBottom.classList.contains('wall') == false) {
+
+                let hitEnemyRight = false;
+                for (const surrondingEnemy of enemies) {
+                    if (surrondingEnemy !== enemy) {
+                        let surrodningEnemyPos = surrondingEnemy.getBoundingClientRect();
+                        if (enemyPos.top < surrodningEnemyPos.bottom &&
+                            enemyPos.bottom > surrodningEnemyPos.top &&
+                            newRight > surrodningEnemyPos.left &&
+                            enemyPos.left < surrodningEnemyPos.right) {
+                            hitEnemyRight = true;
+                        }
+                    }
+                };
+                if (!hitEnemyRight && rightTop.classList.contains('wall') == false && rightBottom.classList.contains('wall') == false) {
                     enemyLeft++;
                 } else {
                     direction = randomNumber();
@@ -270,7 +329,7 @@ function playerSpeed(speed) {
     }, speed);
 };
 
-playerSpeed(1);
+playerSpeed(10);
 
 
 // ======================================================================================================
@@ -602,17 +661,6 @@ function enemyCheck() {
     }
 }
 
-// let powerUpActive = false;
-// function powerUp() {
-//     powerUpActive = true;
-//     player.classList.add('powerUp');
-//     playerInvincibility = true;
-
-//     setTimeout(() => {
-
-//     }, 5000);
-// }
-
 // ======================================================================================================
 // Points Detection
 let pointScoreTrack = 0; //let start of game score = 0 always;
@@ -625,6 +673,8 @@ function pointCheck() {
         nextLevel();
         randomNextLevel();
     }
+
+    // let powerUpActivation = Math.ceil(points.length * 0.5);
 
     for (let i = 0; i < points.length; i++) {
         let pos = points[i].getBoundingClientRect();
@@ -639,15 +689,14 @@ function pointCheck() {
             document.querySelector('.score p').textContent = pointScoreTrack;
             }
 
-            // }
-            //  if (pointScoreTrack / 2 && !powerUpActive) {
-            //     powerUp();
-            // } else {
-            //     playerSpeed(10);
-            // }
+        // if (pointScoreTrack >= powerUpActivation) {
+        //     waitTillStartEnemyMove = false;
+        //     setTimeout(() => {
+        //         waitTillStartEnemyMove = true;
+        //     }, 5000);
         }
     };
-
+// };
 
 function createLife() {
     const li = document.createElement('li');
@@ -663,42 +712,5 @@ function removeLife() {
     const li = document.querySelector('.lives ul li');
     li.parentNode.removeChild(li);
 };
-
-// function jumpSideToSide() {
-//     const player = document.getElementById('player');
-//     const playerPos = player.getBoundingClientRect();
-
-//     // Define the range around the target area
-//     const xRange = { min: 290, max: 300 }; // Adjust these values as needed
-//     const yRange = { min: 440, max: 455 }; // Adjust these values as needed
-
-//     // Check if the player is within the target area
-//     if (
-//         playerPos.x >= xRange.min && playerPos.x <= xRange.max &&
-//         playerPos.y >= yRange.min && playerPos.y <= yRange.max
-//     ) {
-//         // Move the player to the new position
-//         player.style.left = "934.3125px";
-//         player.style.top = "453.171875px";
-//         console.log('hit');
-//     }
-// }
-
-// function jumpSideToSide() {
-//     const player = document.getElementById('player');
-//     const playerPos = player.getBoundingClientRect();
-
-//     const xRange = { min: 290, max: 315 }; 
-//     const yRange = { min: 440, max: 460 }; 
-
-//     if (
-//         playerPos.x >= xRange.min && playerPos.x <= xRange.max &&
-//         playerPos.y >= yRange.min && playerPos.y <= yRange.max
-//     ) {
-//         player.style.left = "934.3125px";
-//         player.style.top = "453.171875px";
-//         console.log('hit');
-//     }
-// }
 
 playerInvincibility = true;

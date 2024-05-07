@@ -140,6 +140,12 @@ div p {
     position: relative;
 }
 
+/* .powerUpImage {
+    background-image: url('images/pacman-cherry.png');
+    background-size: cover; 
+    background-color: red;
+} */
+
 .point {
     border-radius: 100%;
     background-color: white;
