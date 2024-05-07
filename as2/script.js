@@ -15,7 +15,7 @@ const maze = [
     [1, 0, 5, 0, 5, 5, 5, 5, 5, 1],
     [1, 0, 5, 5, 0, 0, 5, 5, 5, 1],
     [1, 0, 5, 1, 0, 0, 5, 5, 5, 1],
-    [1, 0, 5, 0, 0, 5, 0, 1, 1, 1],
+    [1, 0, 5, 0, 5, 5, 0, 1, 1, 1],
     [1, 0, 5, 1, 0, 5, 5, 5, 0, 1],
     [1, 5, 0, 0, 5, 0, 5, 5, 0, 1],
     [1, 5, 5, 0, 0, 0, 0, 0, 0, 1],
@@ -126,8 +126,6 @@ function keyDown(event) {
 let waitTillStartEnemyMove = false;
 let enemies = document.querySelectorAll('.enemy');
 const wallEdge = document.querySelectorAll('.wall');
-// let enemyTop = 0;
-// let enemyLeft = 0;
 
 function randomNumber() {
     return Math.floor(Math.random() * 4) + 1;
@@ -291,38 +289,6 @@ function startGame() {
     waitTillStartEnemyMove = true;
 
     // //ARROW KEYS
-    // document.querySelector('#ubttn').addEventListener('mousedown', function () {
-    //     upPressed = true;
-    // });
-
-    // document.querySelector('#ubttn').addEventListener('mouseup', function () {
-    //     upPressed = false;
-    // });
-
-    // document.querySelector('#dbttn').addEventListener('mousedown', function () {
-    //     downPressed = true;
-    // });
-
-    // document.querySelector('#dbttn').addEventListener('mouseup', function () {
-    //     downPressed = false;
-    // });
-
-    // document.querySelector('#lbttn').addEventListener('mousedown', function () {
-    //     leftPressed = true;
-    // });
-
-    // document.querySelector('#lbttn').addEventListener('mouseup', function () {
-    //     leftPressed = false;
-    // });
-
-    // document.querySelector('#rbttn').addEventListener('mousedown', function () {
-    //     rightPressed = true;
-    // });
-
-    // document.querySelector('#rbttn').addEventListener('mouseup', function () {
-    //     rightPressed = false;
-    // });
-
     let leftButton = document.getElementById("lbttn");
     leftButton.addEventListener('mousedown', goleft)
     function goleft() {
@@ -377,8 +343,6 @@ function nextLevel() {
 
     document.querySelector('.score p').textContent = pointScoreTrack;
 
-    // increaseEnemy();
-    // randomEnemy();
     removeMaze();
     LevelMaxPoints();
     moveEnemy();
@@ -395,8 +359,6 @@ let NewLevelMaxPoints = document.querySelectorAll('.point').length;
 function LevelMaxPoints() {
     LevelMaxPoints = document.querySelectorAll('.point').length;
 }
-
-// let NewLevelPoints = 0;
 
 function randomNextLevel() {
     nextButton.style.display = 'none';
@@ -444,8 +406,6 @@ function randomNextLevel() {
     startGame();
     moveEnemy();
     pointCheck();
-
-    // NewLevelPoints = 0;
 }
 
 
@@ -657,7 +617,6 @@ function enemyCheck() {
 // Points Detection
 let pointScoreTrack = 0; //let start of game score = 0 always;
 let maxPoints = document.querySelectorAll('.point').length; //get the maximum points achiveable in the maze by selecting All '.point'.length and store it in maxPoints
-// let hiddenPoints = 0;
 function pointCheck() {
     const position = player.getBoundingClientRect(); //get player position
     let points = document.querySelectorAll('.point'); //select all with class with points
@@ -665,8 +624,6 @@ function pointCheck() {
     if (points.length == 0) {
         nextLevel();
         randomNextLevel();
-        // moveEnemy();
-        // startGame();
     }
 
     for (let i = 0; i < points.length; i++) {
@@ -679,25 +636,8 @@ function pointCheck() {
             points[i].classList.remove('point');
             console.log('points Got')
             pointScoreTrack++;
-            // hiddenPoints++;
-            // NewLevelPoints++;
-            // console.log(NewLevelPoints);
-            // console.log(hiddenPoints)
             document.querySelector('.score p').textContent = pointScoreTrack;
-
-            // if (pointScoreTrack === maxPoints || NewLevelPoints === NewLevelMaxPoints) { //if the points were to == to the .length of the total points
-                // nextLevel();
-                // randomNextLevel();
-
-
-                // NewLevelPoints = 0;
-                // hiddenPoints = 0;
             }
-
-            // if (hiddenPoints === NewLevelMaxPoints) {
-                // nextLevel();
-                // console.log('condition met for new level');
-                // hiddenPoints = 0;
 
             // }
             //  if (pointScoreTrack / 2 && !powerUpActive) {
@@ -761,4 +701,4 @@ function removeLife() {
 //     }
 // }
 
-// playerInvincibility = true;
+playerInvincibility = true;
