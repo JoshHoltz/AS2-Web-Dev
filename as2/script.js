@@ -444,6 +444,8 @@ function randomNextLevel() {
     startGame();
     moveEnemy();
     pointCheck();
+
+    NewLevelPoints = 0;
 }
 
 
@@ -684,29 +686,32 @@ function pointCheck() {
             // console.log(hiddenPoints)
             document.querySelector('.score p').textContent = pointScoreTrack;
 
-            if (pointScoreTrack === maxPoints || NewLevelPoints === NewLevelMaxPoints) { //if the points were to == to the .length of the total points
-                gameOver(); //run the game over function
+            // if (pointScoreTrack === maxPoints || NewLevelPoints === NewLevelMaxPoints) { //if the points were to == to the .length of the total points
+            if (points.length <= 0) {
                 nextLevel();
                 randomNextLevel();
+            }
+                // nextLevel();
+                // randomNextLevel();
+
 
                 NewLevelPoints = 0;
-                hiddenPoints = 0;
+                // hiddenPoints = 0;
             }
 
-            if (hiddenPoints === NewLevelMaxPoints) {
-                nextLevel();
-                console.log('condition met for new level');
-                hiddenPoints = 0;
+            // if (hiddenPoints === NewLevelMaxPoints) {
+                // nextLevel();
+                // console.log('condition met for new level');
+                // hiddenPoints = 0;
 
-            }
+            // }
             //  if (pointScoreTrack / 2 && !powerUpActive) {
             //     powerUp();
             // } else {
             //     playerSpeed(10);
             // }
         }
-    }
-}
+    };
 
 
 function createLife() {
