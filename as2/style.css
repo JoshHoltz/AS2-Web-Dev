@@ -351,3 +351,25 @@ aside li:nth-child(10) {background-color: #ffffff;}
 .powerUp {
     animation: changeBackgroundColor 5s ease-in-out;
 }
+
+@keyframes enemyHitEnemy {
+    0%, 100% {
+        background-color: green(138 8% 29%);
+    }
+
+    10% {
+        background-color: red;
+    }
+
+    65% {
+        background-color: orange;
+    }
+
+    99% {
+        background-color: red;
+    }
+}
+
+.enemyHitEnemy {
+    animation: enemyHitEnemy 3s ease-in-out;
+}

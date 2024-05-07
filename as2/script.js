@@ -339,9 +339,6 @@ playerSpeed(10);
 const startButton = document.querySelector('.start');
 
 function startGame() {
-    alert("hello");
-
-
     document.addEventListener('keydown', keyDown);
     document.addEventListener('keyup', keyUp);
 
