@@ -268,11 +268,12 @@ function playerSpeed(speed) {
 
         enemyCheck();
         pointCheck();
-        jumpSideToSide();
+        // jumpSideToSide();
     }, speed);
 };
 
 playerSpeed(10);
+
 
 // ======================================================================================================
 // START, NEXT, AND, RESTART BUTTONS //
@@ -281,6 +282,8 @@ playerSpeed(10);
 const startButton = document.querySelector('.start');
 
 function startGame() {
+    alert("hello");
+
 
     document.addEventListener('keydown', keyDown);
     document.addEventListener('keyup', keyUp);
@@ -374,8 +377,8 @@ function nextLevel() {
 
     document.querySelector('.score p').textContent = pointScoreTrack;
 
-    increaseEnemy();
-    randomEnemy();
+    // increaseEnemy();
+    // randomEnemy();
     removeMaze();
     LevelMaxPoints();
 }
@@ -392,6 +395,7 @@ function LevelMaxPoints() {
     LevelMaxPoints = document.querySelectorAll('.point').length;
 }
 
+let NewLevelPoints = 0;
 
 function randomNextLevel() {
     nextButton.style.display = 'none';
@@ -659,7 +663,7 @@ function enemyCheck() {
 // Points Detection
 let pointScoreTrack = 0; //let start of game score = 0 always;
 let maxPoints = document.querySelectorAll('.point').length; //get the maximum points achiveable in the maze by selecting All '.point'.length and store it in maxPoints
-let hiddenPoints = 0;
+// let hiddenPoints = 0;
 function pointCheck() {
     const position = player.getBoundingClientRect(); //get player position
     let points = document.querySelectorAll('.point'); //select all with class with points
@@ -674,15 +678,18 @@ function pointCheck() {
             points[i].classList.remove('point');
             console.log('points Got')
             pointScoreTrack++;
-            hiddenPoints++;
-            console.log(hiddenPoints)
+            // hiddenPoints++;
+            NewLevelPoints++;
+            console.log(NewLevelPoints);
+            // console.log(hiddenPoints)
             document.querySelector('.score p').textContent = pointScoreTrack;
 
-            if (pointScoreTrack === maxPoints) { //if the points were to == to the .length of the total points
+            if (pointScoreTrack === maxPoints || NewLevelPoints === NewLevelMaxPoints) { //if the points were to == to the .length of the total points
                 gameOver(); //run the game over function
                 nextLevel();
                 randomNextLevel();
 
+                NewLevelPoints = 0;
                 hiddenPoints = 0;
             }
 
