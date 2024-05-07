@@ -345,7 +345,7 @@ function nextLevel() {
 
     removeMaze();
     LevelMaxPoints();
-    moveEnemy();
+    // moveEnemy();
 }
 
 // ======================================================================================================
@@ -401,7 +401,7 @@ function randomNextLevel() {
         }
     }
 
-    LevelMaxPoints();
+    // LevelMaxPoints();
     randomMaze();
     startGame();
     moveEnemy();
