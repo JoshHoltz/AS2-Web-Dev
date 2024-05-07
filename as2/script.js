@@ -18,7 +18,7 @@ const maze = [
     [1, 0, 5, 0, 0, 5, 0, 1, 1, 1],
     [1, 0, 5, 1, 0, 5, 5, 5, 0, 1],
     [1, 5, 0, 0, 5, 0, 5, 5, 0, 1],
-    [1, 0, 5, 0, 0, 0, 0, 0, 0, 1],
+    [1, 5, 5, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
 
@@ -272,7 +272,7 @@ function playerSpeed(speed) {
     }, speed);
 };
 
-playerSpeed(10);
+playerSpeed(1);
 
 
 // ======================================================================================================
@@ -381,6 +381,7 @@ function nextLevel() {
     // randomEnemy();
     removeMaze();
     LevelMaxPoints();
+    moveEnemy();
 }
 
 // ======================================================================================================
@@ -395,7 +396,7 @@ function LevelMaxPoints() {
     LevelMaxPoints = document.querySelectorAll('.point').length;
 }
 
-let NewLevelPoints = 0;
+// let NewLevelPoints = 0;
 
 function randomNextLevel() {
     nextButton.style.display = 'none';
@@ -439,13 +440,12 @@ function randomNextLevel() {
     }
 
     LevelMaxPoints();
-
     randomMaze();
     startGame();
     moveEnemy();
     pointCheck();
 
-    NewLevelPoints = 0;
+    // NewLevelPoints = 0;
 }
 
 
@@ -625,14 +625,6 @@ function enemyCheck() {
             if (playerInvincibility == false) { //if not invincible add the 'hit' css class
                 player.classList.add('hit');
                 playerInvincibility = true; //player invinciblity = true now 
-
-                // document.removeEventListener('keydown', keyDown);
-                // document.removeEventListener('keyup', keyUp);            
-
-                // upPressed = false; 
-                // downPressed = false;
-                // leftPressed = false;
-                // rightPressed = false;
             }
 
             setTimeout(() => {
@@ -670,6 +662,13 @@ function pointCheck() {
     const position = player.getBoundingClientRect(); //get player position
     let points = document.querySelectorAll('.point'); //select all with class with points
 
+    if (points.length == 0) {
+        nextLevel();
+        randomNextLevel();
+        // moveEnemy();
+        // startGame();
+    }
+
     for (let i = 0; i < points.length; i++) {
         let pos = points[i].getBoundingClientRect();
         if (position.right > pos.left &&
@@ -681,21 +680,17 @@ function pointCheck() {
             console.log('points Got')
             pointScoreTrack++;
             // hiddenPoints++;
-            NewLevelPoints++;
-            console.log(NewLevelPoints);
+            // NewLevelPoints++;
+            // console.log(NewLevelPoints);
             // console.log(hiddenPoints)
             document.querySelector('.score p').textContent = pointScoreTrack;
 
             // if (pointScoreTrack === maxPoints || NewLevelPoints === NewLevelMaxPoints) { //if the points were to == to the .length of the total points
-            if (points.length <= 0) {
-                nextLevel();
-                randomNextLevel();
-            }
                 // nextLevel();
                 // randomNextLevel();
 
 
-                NewLevelPoints = 0;
+                // NewLevelPoints = 0;
                 // hiddenPoints = 0;
             }
 
