@@ -709,11 +709,3 @@ function removeLife() {
 
 // playerInvincibility = true;
 
-function infinateTesting() {
-    for (;;) {
-        nextLevel();
-        console.log('runningloop')    
-    }
-};
-
-infinateTesting();
