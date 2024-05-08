@@ -169,7 +169,7 @@ setInterval(function moveEnemy() {
                 }
                 break;
 
-                case 2: // MOVE UP
+            case 2: // MOVE UP
                 newTop = enemyPos.top - 1;
                 topL = document.elementFromPoint(enemyPos.left, newTop);
                 topR = document.elementFromPoint(enemyPos.right, newTop);
@@ -193,7 +193,7 @@ setInterval(function moveEnemy() {
                 }
                 break;
 
-                case 3: // MOVE LEFT
+            case 3: // MOVE LEFT
                 newLeft = enemyPos.left - 1;
                 leftTop = document.elementFromPoint(newLeft, enemyPos.top);
                 leftBottom = document.elementFromPoint(newLeft, enemyPos.bottom);
@@ -217,7 +217,7 @@ setInterval(function moveEnemy() {
                 }
                 break;
 
-                case 4: // MOVE RIGHT
+            case 4: // MOVE RIGHT
                 newRight = enemyPos.right + 1;
                 rightTop = document.elementFromPoint(newRight, enemyPos.top);
                 rightBottom = document.elementFromPoint(newRight, enemyPos.bottom);
@@ -263,7 +263,7 @@ function playerSpeed(speed) {
         player = document.querySelector('#player');
         if (downPressed == true) {
             let position = player.getBoundingClientRect() /*Get the Current location and store it in position*/
-            let newBottom = position.bottom + 1; /*to work out the location below we will + 1*/
+            let newBottom = position.bottom + 2; /*to work out the location below we will + 1*/
 
             let btmL = document.elementFromPoint(position.left, newBottom);
             let btmR = document.elementFromPoint(position.right, newBottom);
@@ -678,9 +678,9 @@ function pointCheck() {
             console.log('points Got')
             pointScoreTrack++;
             document.querySelector('.score p').textContent = pointScoreTrack;
-            }
         }
-    };
+    }
+};
 
 
 function createLife() {
