@@ -474,6 +474,12 @@ restartButton.style.display = 'none';
 let restartBtn = restartButton.addEventListener('click', reloadBrowser)
 
 function restartGame() {
+    const enemies = document.querySelectorAll('.enemy');
+
+    for (const enemy of enemies) {
+        enemy.classList.remove('enemy');
+    }
+
     waitTillStartEnemyMove = false;
     playerTop = 0;
     playerLeft = 0;
@@ -489,6 +495,8 @@ function restartGame() {
     player.classList.add('dead');
 
     topFiveLocalStorage();
+
+    
 
     restartBtn.addEventListener('click', restartButton)
     reloadBrowser();
