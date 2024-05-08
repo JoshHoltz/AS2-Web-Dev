@@ -57,6 +57,13 @@ randomEnemy();
 randomEnemy();
 randomEnemy();
 
+// ====================================================================================================== 
+// Sound
+let pacManSound = new Audio('pacman_beginning.mp3') //MAZE GAME SOUND
+let deathSound = new Audio('pacman_death.mp3') //DEATH SOUND
+let newLevelSound = new Audio('pacman_intermission.mp3') //NEW LEVEL SOUND
+let hitSound = new Audio('Lost-life-sound-effect.mp3')
+
 //Populates the maze in the HTML
 for (let y of maze) {
     for (let x of y) {
@@ -127,6 +134,8 @@ let direction = randomNumber();
 setInterval(function moveEnemy() {
     if (!waitTillStartEnemyMove) return;
     enemies = document.querySelectorAll('.enemy');
+
+    pacManSound.play(); //PLAY PACMAN SOUNDS
 
     enemies.forEach(enemy => {
         let enemyPos = enemy.getBoundingClientRect();
@@ -625,6 +634,7 @@ function enemyCheck() {
             if (playerInvincibility == false) { //if not invincible add the 'hit' css class
                 player.classList.add('hit');
                 playerInvincibility = true; //player invinciblity = true now 
+                hitSound.play();
             }
 
             setTimeout(() => {
@@ -633,6 +643,7 @@ function enemyCheck() {
             }, 3000); //3s iof invincibility 
 
             if (lives <= 0) {  //if lives are less than or = to 0 run restartGame(); as they lost
+                deathSound.play();
                 restartGame();
             } else {
                 removeLife();
@@ -651,6 +662,7 @@ function pointCheck() {
     let points = document.querySelectorAll('.point'); //select all with class with points
 
     if (points.length == 0) {
+        newLevelSound.play()
         nextLevel();
         randomNextLevel();
     }
