@@ -57,20 +57,6 @@ randomEnemy();
 randomEnemy();
 randomEnemy();
 
-function randomPowerUpPosition() {
-    let row = Math.floor(Math.random() * maze.length);
-    let column = Math.floor(Math.random() * maze[row].length);
-
-    if (maze[row][column] == 0) {
-        maze[row][column] = 4;
-    }
-    else {
-        randomPowerUpPosition();
-    }
-}
-
-randomPowerUpPosition();
-
 //Populates the maze in the HTML
 for (let y of maze) {
     for (let x of y) {
