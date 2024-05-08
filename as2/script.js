@@ -325,7 +325,6 @@ function playerSpeed(speed) {
 
         enemyCheck();
         pointCheck();
-        // jumpSideToSide();
     }, speed);
 };
 
@@ -457,7 +456,6 @@ function randomNextLevel() {
         }
     }
 
-    // LevelMaxPoints();
     randomMaze();
     startGame();
     moveEnemy();
@@ -671,8 +669,6 @@ function pointCheck() {
         randomNextLevel();
     }
 
-    // let powerUpActivation = Math.ceil(points.length * 0.5);
-
     for (let i = 0; i < points.length; i++) {
         let pos = points[i].getBoundingClientRect();
         if (position.right > pos.left &&
@@ -685,15 +681,9 @@ function pointCheck() {
             pointScoreTrack++;
             document.querySelector('.score p').textContent = pointScoreTrack;
             }
-
-        // if (pointScoreTrack >= powerUpActivation) {
-        //     waitTillStartEnemyMove = false;
-        //     setTimeout(() => {
-        //         waitTillStartEnemyMove = true;
-        //     }, 5000);
         }
     };
-// };
+
 
 function createLife() {
     const li = document.createElement('li');
@@ -710,4 +700,4 @@ function removeLife() {
     li.parentNode.removeChild(li);
 };
 
-playerInvincibility = true;
+// playerInvincibility = true;
