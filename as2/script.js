@@ -412,7 +412,7 @@ function LevelMaxPoints() {
 
 function randomNextLevel() {
     nextButton.style.display = 'none';
-    playerInvincibility = true;
+    // playerInvincibility = true;
     for (let y of maze) {
         for (let x of y) {
             let block = document.createElement('div');
