@@ -409,6 +409,7 @@ let NewLevelMaxPoints = document.querySelectorAll('.point').length;
 function LevelMaxPoints() {
     LevelMaxPoints = document.querySelectorAll('.point').length;
 }
+let randomWallTrack = 0
 
 function randomNextLevel() {
     nextButton.style.display = 'none';
@@ -451,7 +452,15 @@ function randomNextLevel() {
         }
     }
 
-    randomMaze();
+    randomWallTrack++
+
+    if (randomWallTrack <= 10) {
+        randomMaze();
+    } else {
+        console.log('wall limit reached')
+    }
+    
+    // randomMaze();
     startGame();
     moveEnemy();
     pointCheck();
