@@ -126,128 +126,142 @@ let waitTillStartEnemyMove = false;
 let enemies = document.querySelectorAll('.enemy');
 const wallEdge = document.querySelectorAll('.wall');
 
+function customEnemySpeed() {
+    //New Line: https://stackoverflow.com/questions/1841452/new-line-in-javascript-alert-box
+    let speed = prompt('Enter the desired Speed for Enemies: 1-20. \n 1 - Fastest \n 20 - Slowest ');
+    speed = parseInt(speed) //convert string to int
+
+    if (speed <= 0 || speed >= 21) {
+        alert('Enter a valid number between 1-20.\n 1 - Fastest \n 20 - Slowest')
+        customPlayerSpeed();
+    } else {
+        enemySpeed(speed);
+    }
+}
+
 function randomNumber() {
     return Math.floor(Math.random() * 4) + 1;
 };
 let direction = randomNumber();
 
-setInterval(function moveEnemy() {
-    if (!waitTillStartEnemyMove) return;
-    enemies = document.querySelectorAll('.enemy');
-
-    pacManSound.play(); //PLAY PACMAN SOUNDS
-
-    enemies.forEach(enemy => {
-        let enemyPos = enemy.getBoundingClientRect();
-        let enemyTop = parseInt(enemy.style.top) || 0; //PARSE INT SO ITS NOT RETURNING A STRING!!!!
-        let enemyLeft = parseInt(enemy.style.left) || 0;
-        let direction = enemy.direction || randomNumber();
-
-        switch (direction) {
-            case 1: // MOVE DOWN
-                newBottom = enemyPos.bottom + 1;
-                btmL = document.elementFromPoint(enemyPos.left, newBottom);
-                btmR = document.elementFromPoint(enemyPos.right, newBottom);
-
-                let hitEnemyBottom = false;
-                for (const surrondingEnemy of enemies) {
-                    if (surrondingEnemy !== enemy) {
-                        let surrodningEnemyPos = surrondingEnemy.getBoundingClientRect();
-                        if (enemyPos.left < surrodningEnemyPos.right &&
-                            enemyPos.right > surrodningEnemyPos.left &&
-                            newBottom < surrodningEnemyPos.top &&
-                            enemyPos.top < surrodningEnemyPos.bottom) {
-                            hitEnemyBottom = true;
+function enemySpeed(speed) {
+    setInterval(function moveEnemy() {
+        if (!waitTillStartEnemyMove) return;
+        enemies = document.querySelectorAll('.enemy');
+    
+        pacManSound.play(); //PLAY PACMAN SOUNDS
+    
+        enemies.forEach(enemy => {
+            let enemyPos = enemy.getBoundingClientRect();
+            let enemyTop = parseInt(enemy.style.top) || 0; //PARSE INT SO ITS NOT RETURNING A STRING!!!!
+            let enemyLeft = parseInt(enemy.style.left) || 0;
+            let direction = enemy.direction || randomNumber();
+    
+            switch (direction) {
+                case 1: // MOVE DOWN
+                    newBottom = enemyPos.bottom + 1;
+                    btmL = document.elementFromPoint(enemyPos.left, newBottom);
+                    btmR = document.elementFromPoint(enemyPos.right, newBottom);
+    
+                    let hitEnemyBottom = false;
+                    for (const surrondingEnemy of enemies) {
+                        if (surrondingEnemy !== enemy) {
+                            let surrodningEnemyPos = surrondingEnemy.getBoundingClientRect();
+                            if (enemyPos.left < surrodningEnemyPos.right &&
+                                enemyPos.right > surrodningEnemyPos.left &&
+                                newBottom < surrodningEnemyPos.top &&
+                                enemyPos.top < surrodningEnemyPos.bottom) {
+                                hitEnemyBottom = true;
+                            }
                         }
+                    };
+    
+                    if (!hitEnemyBottom && btmL.classList.contains('wall') == false && btmR.classList.contains('wall') == false) {
+                        enemyTop++;
+                    } else {
+                        direction = randomNumber();
                     }
-                };
-
-                if (!hitEnemyBottom && btmL.classList.contains('wall') == false && btmR.classList.contains('wall') == false) {
-                    enemyTop++;
-                } else {
-                    direction = randomNumber();
-                }
-                break;
-
-            case 2: // MOVE UP
-                newTop = enemyPos.top - 1;
-                topL = document.elementFromPoint(enemyPos.left, newTop);
-                topR = document.elementFromPoint(enemyPos.right, newTop);
-
-                let hitEnemyTop = false;
-                for (const surrondingEnemy of enemies) {
-                    if (surrondingEnemy !== enemy) {
-                        let surrodningEnemyPos = surrondingEnemy.getBoundingClientRect();
-                        if (enemyPos.left < surrodningEnemyPos.right &&
-                            enemyPos.right > surrodningEnemyPos.left &&
-                            newTop < surrodningEnemyPos.bottom &&
-                            enemyPos.bottom > surrodningEnemyPos.top) {
-                            hitEnemyTop = true;
+                    break;
+    
+                case 2: // MOVE UP
+                    newTop = enemyPos.top - 1;
+                    topL = document.elementFromPoint(enemyPos.left, newTop);
+                    topR = document.elementFromPoint(enemyPos.right, newTop);
+    
+                    let hitEnemyTop = false;
+                    for (const surrondingEnemy of enemies) {
+                        if (surrondingEnemy !== enemy) {
+                            let surrodningEnemyPos = surrondingEnemy.getBoundingClientRect();
+                            if (enemyPos.left < surrodningEnemyPos.right &&
+                                enemyPos.right > surrodningEnemyPos.left &&
+                                newTop < surrodningEnemyPos.bottom &&
+                                enemyPos.bottom > surrodningEnemyPos.top) {
+                                hitEnemyTop = true;
+                            }
                         }
+                    };
+                    if (!hitEnemyTop && topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) {
+                        enemyTop--;
+                    } else {
+                        direction = randomNumber();
                     }
-                };
-                if (!hitEnemyTop && topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) {
-                    enemyTop--;
-                } else {
-                    direction = randomNumber();
-                }
-                break;
-
-            case 3: // MOVE LEFT
-                newLeft = enemyPos.left - 1;
-                leftTop = document.elementFromPoint(newLeft, enemyPos.top);
-                leftBottom = document.elementFromPoint(newLeft, enemyPos.bottom);
-
-                let hitEnemyLeft = false;
-                for (const surrondingEnemy of enemies) {
-                    if (surrondingEnemy !== enemy) {
-                        let surrodningEnemyPos = surrondingEnemy.getBoundingClientRect();
-                        if (enemyPos.top < surrodningEnemyPos.bottom &&
-                            enemyPos.bottom > surrodningEnemyPos.top &&
-                            newLeft < surrodningEnemyPos.right &&
-                            enemyPos.right > surrodningEnemyPos.left) {
-                            hitEnemyLeft = true;
+                    break;
+    
+                case 3: // MOVE LEFT
+                    newLeft = enemyPos.left - 1;
+                    leftTop = document.elementFromPoint(newLeft, enemyPos.top);
+                    leftBottom = document.elementFromPoint(newLeft, enemyPos.bottom);
+    
+                    let hitEnemyLeft = false;
+                    for (const surrondingEnemy of enemies) {
+                        if (surrondingEnemy !== enemy) {
+                            let surrodningEnemyPos = surrondingEnemy.getBoundingClientRect();
+                            if (enemyPos.top < surrodningEnemyPos.bottom &&
+                                enemyPos.bottom > surrodningEnemyPos.top &&
+                                newLeft < surrodningEnemyPos.right &&
+                                enemyPos.right > surrodningEnemyPos.left) {
+                                hitEnemyLeft = true;
+                            }
                         }
+                    };
+                    if (!hitEnemyLeft && leftTop.classList.contains('wall') == false && leftBottom.classList.contains('wall') == false) {
+                        enemyLeft--;
+                    } else {
+                        direction = randomNumber();
                     }
-                };
-                if (!hitEnemyLeft && leftTop.classList.contains('wall') == false && leftBottom.classList.contains('wall') == false) {
-                    enemyLeft--;
-                } else {
-                    direction = randomNumber();
-                }
-                break;
-
-            case 4: // MOVE RIGHT
-                newRight = enemyPos.right + 1;
-                rightTop = document.elementFromPoint(newRight, enemyPos.top);
-                rightBottom = document.elementFromPoint(newRight, enemyPos.bottom);
-
-                let hitEnemyRight = false;
-                for (const surrondingEnemy of enemies) {
-                    if (surrondingEnemy !== enemy) {
-                        let surrodningEnemyPos = surrondingEnemy.getBoundingClientRect();
-                        if (enemyPos.top < surrodningEnemyPos.bottom &&
-                            enemyPos.bottom > surrodningEnemyPos.top &&
-                            newRight > surrodningEnemyPos.left &&
-                            enemyPos.left < surrodningEnemyPos.right) {
-                            hitEnemyRight = true;
+                    break;
+    
+                case 4: // MOVE RIGHT
+                    newRight = enemyPos.right + 1;
+                    rightTop = document.elementFromPoint(newRight, enemyPos.top);
+                    rightBottom = document.elementFromPoint(newRight, enemyPos.bottom);
+    
+                    let hitEnemyRight = false;
+                    for (const surrondingEnemy of enemies) {
+                        if (surrondingEnemy !== enemy) {
+                            let surrodningEnemyPos = surrondingEnemy.getBoundingClientRect();
+                            if (enemyPos.top < surrodningEnemyPos.bottom &&
+                                enemyPos.bottom > surrodningEnemyPos.top &&
+                                newRight > surrodningEnemyPos.left &&
+                                enemyPos.left < surrodningEnemyPos.right) {
+                                hitEnemyRight = true;
+                            }
                         }
+                    };
+                    if (!hitEnemyRight && rightTop.classList.contains('wall') == false && rightBottom.classList.contains('wall') == false) {
+                        enemyLeft++;
+                    } else {
+                        direction = randomNumber();
                     }
-                };
-                if (!hitEnemyRight && rightTop.classList.contains('wall') == false && rightBottom.classList.contains('wall') == false) {
-                    enemyLeft++;
-                } else {
-                    direction = randomNumber();
-                }
-                break;
-        }
-
-        enemy.style.top = enemyTop + 'px';
-        enemy.style.left = enemyLeft + 'px';
-        enemy.direction = direction;
-    });
-}, 10);
-
+                    break;
+            }
+    
+            enemy.style.top = enemyTop + 'px';
+            enemy.style.left = enemyLeft + 'px';
+            enemy.direction = direction;
+        });
+    }, speed);
+}
 
 let player = document.querySelector('#player');
 const playerMouth = player.querySelector('.mouth');
@@ -258,7 +272,7 @@ let playerLeft = 0;
 
 function customPlayerSpeed() {
     //New Line: https://stackoverflow.com/questions/1841452/new-line-in-javascript-alert-box
-    let speed = prompt('Enter the desired Speed: 1-20. \n 1 - Fastest \n 20 - Slowest ');
+    let speed = prompt('Enter the desired Speed for the Player: 1-20. \n 1 - Fastest \n 20 - Slowest ');
     speed = parseInt(speed) //convert string to int
 
     if (speed <= 0 || speed >= 21) {
@@ -349,6 +363,8 @@ const startButton = document.querySelector('.start');
 
 function startGame() {
     customPlayerSpeed();
+    customEnemySpeed();
+
     document.addEventListener('keydown', keyDown);
     document.addEventListener('keyup', keyUp);
 
