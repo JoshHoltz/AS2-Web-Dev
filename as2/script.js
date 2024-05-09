@@ -136,6 +136,8 @@ function randomNumber() {
 let direction = randomNumber();
 
 nextLevelEnemyPause = true;
+let nextLevelPlayerPause = true;
+
 setInterval(function moveEnemy() {
     if (!nextLevelEnemyPause) return;
 
