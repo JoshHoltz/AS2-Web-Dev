@@ -131,9 +131,9 @@ function customEnemySpeed() {
     let speed = prompt('Enter the desired Speed for Enemies: 1-20. \n 1 - Fastest \n 20 - Slowest ');
     speed = parseInt(speed) //convert string to int
 
-    if (speed <= 0 || speed >= 21) {
+    if (isNaN(speed) || speed <= 0 || speed >= 21) {
         alert('Enter a valid number between 1-20.\n 1 - Fastest \n 20 - Slowest')
-        customPlayerSpeed();
+        customEnemySpeed();
     } else {
         enemySpeed(speed);
     }
@@ -272,10 +272,11 @@ let playerLeft = 0;
 
 function customPlayerSpeed() {
     //New Line: https://stackoverflow.com/questions/1841452/new-line-in-javascript-alert-box
+    // Ensure a valid number has been entered https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN
     let speed = prompt('Enter the desired Speed for the Player: 1-20. \n 1 - Fastest \n 20 - Slowest ');
     speed = parseInt(speed) //convert string to int
 
-    if (speed <= 0 || speed >= 21) {
+    if (isNaN(speed) || speed <= 0 || speed >= 21) {
         alert('Enter a valid number between 1-20.\n 1 - Fastest \n 20 - Slowest')
         customPlayerSpeed();
     } else {
