@@ -17,7 +17,7 @@ const maze = [
     [1, 0, 5, 1, 0, 0, 5, 5, 5, 1],
     [1, 0, 5, 0, 5, 5, 0, 1, 1, 1],
     [1, 0, 5, 1, 0, 5, 5, 5, 0, 1],
-    [1, 5, 0, 0, 5, 0, 5, 5, 0, 1],
+    [1, 5, 0, 0, 5, 0, 5, 5, 5, 1],
     [1, 5, 5, 5, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
@@ -111,12 +111,16 @@ function keyUp(event) {
 
 function keyDown(event) {
     if (event.key === 'ArrowUp') {
+        if (!nextLevelPlayerPause) return;
         upPressed = true;
     } else if (event.key === 'ArrowDown') {
+        if (!nextLevelPlayerPause) return;
         downPressed = true;
     } else if (event.key === 'ArrowLeft') {
+        if (!nextLevelPlayerPause) return;
         leftPressed = true;
     } else if (event.key === 'ArrowRight') {
+        if (!nextLevelPlayerPause) return;
         rightPressed = true;
     }
 }
@@ -131,7 +135,10 @@ function randomNumber() {
 };
 let direction = randomNumber();
 
+nextLevelEnemyPause = true;
 setInterval(function moveEnemy() {
+    if (!nextLevelEnemyPause) return;
+
     if (!waitTillStartEnemyMove) return;
     enemies = document.querySelectorAll('.enemy');
 
@@ -145,7 +152,7 @@ setInterval(function moveEnemy() {
 
         switch (direction) {
             case 1: // MOVE DOWN
-                newBottom = enemyPos.bottom + 1;
+                newBottom = enemyPos.bottom + 2;
                 btmL = document.elementFromPoint(enemyPos.left, newBottom);
                 btmR = document.elementFromPoint(enemyPos.right, newBottom);
 
@@ -170,7 +177,7 @@ setInterval(function moveEnemy() {
                 break;
 
             case 2: // MOVE UP
-                newTop = enemyPos.top - 1;
+                newTop = enemyPos.top - 2;
                 topL = document.elementFromPoint(enemyPos.left, newTop);
                 topR = document.elementFromPoint(enemyPos.right, newTop);
 
@@ -194,7 +201,7 @@ setInterval(function moveEnemy() {
                 break;
 
             case 3: // MOVE LEFT
-                newLeft = enemyPos.left - 1;
+                newLeft = enemyPos.left - 2;
                 leftTop = document.elementFromPoint(newLeft, enemyPos.top);
                 leftBottom = document.elementFromPoint(newLeft, enemyPos.bottom);
 
@@ -218,7 +225,7 @@ setInterval(function moveEnemy() {
                 break;
 
             case 4: // MOVE RIGHT
-                newRight = enemyPos.right + 1;
+                newRight = enemyPos.right + 2;
                 rightTop = document.elementFromPoint(newRight, enemyPos.top);
                 rightBottom = document.elementFromPoint(newRight, enemyPos.bottom);
 
@@ -333,6 +340,9 @@ playerSpeed(10);
 const startButton = document.querySelector('.start');
 
 function startGame() {
+
+    // if (!nextLevelPlayerMove) return;
+
     document.addEventListener('keydown', keyDown);
     document.addEventListener('keyup', keyUp);
 
@@ -376,7 +386,30 @@ const nextButton = document.querySelector('.next');
 nextButton.style.display = 'none';
 let nextBtn = nextButton.addEventListener('click', nextLevel)
 
+const roundCountdown = document.querySelector('.roundCountdown');
+roundCountdown.style.display = 'none';
+
 function nextLevel() {
+    nextLevelPlayerPause = false;
+    nextLevelEnemyPause = false;
+    roundCountdown.style.display = 'flex';
+
+    setTimeout(() => {
+        let countdown = 3
+        const countdownInterval = setInterval(function() {
+            roundCountdown.textContent = `Next Round In: ${countdown}`;
+            countdown--;
+            if (countdown === 0) {
+                // clearInterval(countdownInterval);
+                nextLevelPlayerPause = true;
+                nextLevelEnemyPause = true;
+                roundCountdown.style.display = 'none';
+                countdown = 3;
+            }
+        }, 1000);
+
+    }, 3000)
+
     waitTillStartEnemyMove = false;
     playerTop = 0;
     playerLeft = 0;
@@ -395,7 +428,6 @@ function nextLevel() {
 
     removeMaze();
     LevelMaxPoints();
-    // moveEnemy();
 }
 
 // ======================================================================================================
@@ -462,7 +494,7 @@ function randomNextLevel() {
     
     // randomMaze();
     startGame();
-    moveEnemy();
+    // moveEnemy();
     pointCheck();
 }
 
@@ -716,4 +748,3 @@ function removeLife() {
 };
 
 // playerInvincibility = true;
-
