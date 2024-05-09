@@ -18,7 +18,7 @@ const maze = [
     [1, 0, 5, 0, 5, 5, 0, 1, 1, 1],
     [1, 0, 5, 1, 0, 5, 5, 5, 0, 1],
     [1, 5, 0, 0, 5, 0, 5, 5, 0, 1],
-    [1, 5, 5, 5, 0, 0, 0, 0, 0, 1],
+    [1, 5, 5, 5, 0, 0, 0, 5, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
 
@@ -256,6 +256,19 @@ let playerLeft = 0;
 
 // ======================================================================================================
 
+function customPlayerSpeed() {
+    //New Line: https://stackoverflow.com/questions/1841452/new-line-in-javascript-alert-box
+    let speed = prompt('Enter the desired Speed: 1-20. \n 1 - Fastest \n 20 - Slowest ');
+    speed = parseInt(speed) //convert string to int
+
+    if (speed <= 0 || speed >= 21) {
+        alert('Enter a valid number between 1-20.\n 1 - Fastest \n 20 - Slowest')
+        customPlayerSpeed();
+    } else {
+        playerSpeed(speed);
+    }
+}
+
 // Collision Detection
 function playerSpeed(speed) {
 
@@ -323,7 +336,9 @@ function playerSpeed(speed) {
     }, speed);
 };
 
-playerSpeed(10);
+// playerSpeed(10);
+// customPlayerSpeed();
+// playerSpeed();
 
 
 // ======================================================================================================
@@ -333,6 +348,7 @@ playerSpeed(10);
 const startButton = document.querySelector('.start');
 
 function startGame() {
+    customPlayerSpeed();
     document.addEventListener('keydown', keyDown);
     document.addEventListener('keyup', keyUp);
 
@@ -460,7 +476,6 @@ function randomNextLevel() {
         console.log('wall limit reached')
     }
     
-    // randomMaze();
     startGame();
     moveEnemy();
     pointCheck();
@@ -495,8 +510,6 @@ function restartGame() {
     player.classList.add('dead');
 
     topFiveLocalStorage();
-
-    
 
     restartBtn.addEventListener('click', restartButton)
     reloadBrowser();
@@ -540,6 +553,7 @@ function updateLeaderboard() {
         let [playerName, playerScore] = score;
         let listItem = document.createElement('li');
         listItem.textContent = `${playerName}........${playerScore}`;
+        existingScores[4] = listItem.style.colour = 'red';
         leaderboardElement.appendChild(listItem);
     });
 }
@@ -551,7 +565,7 @@ function topFiveLocalStorage() {
     if (!playerName) {
         playerName = prompt('What is your Name? ');
 
-        if (!playerName) {
+        if (!playerName) { //If they dont enter a name, dont display/store score
             return;
         }
 
