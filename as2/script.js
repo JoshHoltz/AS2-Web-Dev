@@ -111,12 +111,16 @@ function keyUp(event) {
 
 function keyDown(event) {
     if (event.key === 'ArrowUp') {
+        if (hitPause) return;
         upPressed = true;
     } else if (event.key === 'ArrowDown') {
+        if (hitPause) return;
         downPressed = true;
     } else if (event.key === 'ArrowLeft') {
+        if (hitPause) return;
         leftPressed = true;
     } else if (event.key === 'ArrowRight') {
+        if (hitPause) return;
         rightPressed = true;
     }
 }
@@ -664,6 +668,7 @@ function closeColourPicker() {
 // ======================================================================================================
 // ENEMY DETECTION
 let playerInvincibility = false;
+let hitPause = false;
 
 function enemyCheck() {
     let position = player.getBoundingClientRect(); //GET PLAYER POSITION 
@@ -684,12 +689,19 @@ function enemyCheck() {
                 player.classList.add('hit');
                 playerInvincibility = true; //player invinciblity = true now 
                 hitSound.play();
+                hitPause = true;
             }
 
             setTimeout(() => {
                 player.classList.remove('hit');
+                //playerInvincibility = false; //invincibility = false to break 
+                hitPause = false;
+            }, 1500); //1.5s iof invincibility 
+
+            setTimeout(() => {
                 playerInvincibility = false; //invincibility = false to break 
-            }, 3000); //3s iof invincibility 
+            }, 2000); //2s iof invincibility 
+
 
             if (lives <= 0) {  //if lives are less than or = to 0 run restartGame(); as they lost
                 deathSound.play();
